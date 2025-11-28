@@ -16,16 +16,15 @@ const eslintConfig = defineConfig([
   {
     // 커스텀 규칙 추가
     rules: {
-      "react-refresh/only-export-components": [
-        "warn",
-        { allowConstantExport: true },
-      ],
       "@typescript-eslint/no-explicit-any": "off",
       "jsx-quotes": ["error", "prefer-double"],
       semi: ["error", "always"],
       "@typescript-eslint/no-empty-object-type": "off",
       "react/jsx-max-props-per-line": ["error", { maximum: 1 }],
       "react-hooks/exhaustive-deps": "off",
+			"no-unused-vars": "warn",
+			"@typescript-eslint/no-unused-vars": "warn",
+			//"no-console": "warn",
     },
   },
 ]);
