@@ -18,11 +18,11 @@
 				"name": "next"
 			}
 		],
-		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./*"]
+			"@/*": ["./src/*"]
 		},
-		"typeRoots": ["./node_modules/@types", "./@types"]
+		"baseUrl": ".",
+		"typeRoots": ["./node_modules/@types", "./@types"] // type 루트 설정
 	},
 	"include": [
 		"next-env.d.ts",
