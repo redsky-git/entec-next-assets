@@ -75,8 +75,8 @@ const LayoutMainIndex: IComponent<ILayoutMainIndexProps> = ({ children }) => {
 						<SidebarInset>
 							<div className="flex">
 								<div className=" flex-1 flex-col gap-4 p-6">
-									{/* entec-react-assets-contents 클래스를 이용해서 내부 컨텐츠의 h2, h3 태그 찾는 aside 화면 로직 때문에 추가 */}
-									<div className="entec-react-assets-contents min-h-screen flex-1 rounded-xl md:min-h-min">
+									{/* entec-next-assets-contents 클래스를 이용해서 내부 컨텐츠의 h2, h3 태그 찾는 aside 화면 로직 때문에 추가 */}
+									<div className="entec-next-assets-contents min-h-screen flex-1 rounded-xl md:min-h-min">
 										{children}
 									</div>
 								</div>
