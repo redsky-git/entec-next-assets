@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import '@/assets/styles/app.css';
 
-import LayoutMainIndex from './_shared/components/layout/LayoutMainIndex';
+import LayoutMainIndex from '../shared/components/layout/LayoutMainIndex';
 
 export const metadata: Metadata = {
 	title: 'entec-next-assets',

@@ -5,7 +5,7 @@ import type { IComponent } from '@/core/types/common';
 //import { Outlet, useLocation, useNavigate } from 'react-router';
 import { useState } from 'react';
 
-import { NAV_DATA } from '@/app/_shared/constants/nav-data';
+import { NAV_DATA } from '@/shared/constants/nav-data';
 
 import { AppSidebar } from '@/core/components/shadcn/app-sidebar';
 import { SiteHeader } from '@/core/components/shadcn/site-header';
