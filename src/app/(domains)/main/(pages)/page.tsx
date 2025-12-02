@@ -23,7 +23,7 @@ const MainIndex: IComponent<IMainIndexProps> = () => {
 				</h1>
 
 				<p className="text-lg text-slate-500 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-					<strong>entec-react-assets</strong> 라이브러리의 실제 동작 컴포넌트를 미리보기하고, 예제 코드를 복사하여 작업
+					<strong>entec-next-assets</strong> 라이브러리의 실제 동작 컴포넌트를 미리보기하고, 예제 코드를 복사하여 작업
 					중인 프로젝트에 즉시 반영할 수 있습니다.
 				</p>
 
@@ -46,10 +46,10 @@ const MainIndex: IComponent<IMainIndexProps> = () => {
 				</div>
 				<div className="mb-10 flex flex-col items-center">
 					<span className="inline-block rounded-full bg-blue-100 px-4 py-1 text-blue-700 font-medium text-sm mb-3 tracking-wide shadow-sm">
-						Made with <span className="font-semibold text-blue-600">entec-react-assets</span>
+						Made with <span className="font-semibold text-blue-600">entec-next-assets</span>
 					</span>
 					<p className="text-slate-400 text-base">
-						이 예제 사이트는 <span className="font-semibold text-blue-600">entec-react-assets</span> 라이브러리를
+						이 예제 사이트는 <span className="font-semibold text-blue-600">entec-next-assets</span> 라이브러리를
 						기반으로 제작되었습니다.
 					</p>
 				</div>
