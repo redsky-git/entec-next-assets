@@ -1,5 +1,7 @@
 'use client';
 
+import { useCallback } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { ChevronRight, type LucideIcon } from 'lucide-react';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/core/components/shadcn/ui/collapsible';
@@ -29,13 +31,30 @@ export function NavMain({
 		}[];
 	}[];
 }) {
+	const router = useRouter();
+	const activeMenu = usePathname();
+	// url에 http, https가 있는지 찾는 함수
+	const findExternalUrl = useCallback((url: string) => {
+		return url.includes('http://') || url.includes('https://');
+	}, []);
+
+	// nav 클릭, 화면이동
+	const handlerNav = (url: string) => {
+		//setActiveMenu(url);
+		if (findExternalUrl(url)) {
+			window.open(url, '_blank', 'noopener,noreferrer');
+		} else {
+			router.push(url);
+		}
+	};
+
 	return (
 		<SidebarGroup>
 			<SidebarGroupLabel>Example</SidebarGroupLabel>
 			<SidebarMenu>
-				{items.map((item) => (
+				{items.map((item, index) => (
 					<Collapsible
-						key={item.title}
+						key={`${item.title}-${index}`}
 						asChild
 						defaultOpen={item.isActive}
 					>
@@ -44,10 +63,14 @@ export function NavMain({
 								asChild
 								tooltip={item.title}
 							>
-								<a href={item.url}>
+								<button
+									onClick={() => handlerNav(item.url)}
+									className="link-style"
+									key={index}
+								>
 									<item.icon />
 									<span>{item.title}</span>
-								</a>
+								</button>
 							</SidebarMenuButton>
 							{item.items?.length ? (
 								<>
@@ -59,12 +82,18 @@ export function NavMain({
 									</CollapsibleTrigger>
 									<CollapsibleContent>
 										<SidebarMenuSub>
-											{item.items?.map((subItem) => (
-												<SidebarMenuSubItem key={subItem.title}>
-													<SidebarMenuSubButton asChild>
-														<a href={subItem.url}>
+											{item.items?.map((subItem, subIndex) => (
+												<SidebarMenuSubItem key={`${subItem.title}-${subIndex}`}>
+													<SidebarMenuSubButton
+														isActive={activeMenu === subItem.url}
+														asChild
+													>
+														<button
+															onClick={() => handlerNav(subItem.url)}
+															className="link-style w-full"
+														>
 															<span>{subItem.title}</span>
-														</a>
+														</button>
 													</SidebarMenuSubButton>
 												</SidebarMenuSubItem>
 											))}
