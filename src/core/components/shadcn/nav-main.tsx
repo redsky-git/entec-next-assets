@@ -16,6 +16,7 @@ import {
 	SidebarMenuSubButton,
 	SidebarMenuSubItem,
 } from '@/core/components/shadcn/ui/sidebar';
+import { Separator } from '@/core/components/shadcn/ui/separator';
 
 export function NavMain({
 	items,
@@ -26,6 +27,7 @@ export function NavMain({
 		icon: LucideIcon;
 		isActive?: boolean;
 		items?: {
+			type?: 'group' | 'item';
 			title: string;
 			url: string;
 		}[];
@@ -112,21 +114,39 @@ export function NavMain({
 									</CollapsibleTrigger>
 									<CollapsibleContent>
 										<SidebarMenuSub>
-											{item.items?.map((subItem, subIndex) => (
-												<SidebarMenuSubItem key={`${subItem.title}-${subIndex}`}>
-													<SidebarMenuSubButton
-														isActive={activeMenu === subItem.url}
-														asChild
-													>
-														<button
-															onClick={() => handlerNav(subItem.url)}
-															className="link-style w-full"
-														>
+											{item.items?.map((subItem, subIndex) => {
+												return (
+													<div key={`${subItem.title}-${subIndex}`}>
+														{subItem.type && subItem.type === 'group' ? (
+															<>
+																<Separator className={subIndex !== 0 ? 'mt-3' : ''} />
+																<SidebarGroupLabel className="text-gray-400 h-[25px]">
+																	{subItem.title}
+																	{subItem.url}
+																</SidebarGroupLabel>
+																<Separator />
+															</>
+														) : (
+															<SidebarMenuSubItem key={`${subItem.title}-${subIndex}`}>
+																<SidebarMenuSubButton
+																	isActive={activeMenu === subItem.url}
+																	asChild
+																>
+																	{/*<a href={subItem.url}>
 															<span>{subItem.title}</span>
-														</button>
-													</SidebarMenuSubButton>
-												</SidebarMenuSubItem>
-											))}
+														</a>*/}
+																	<button
+																		onClick={() => handlerNav(subItem.url)}
+																		className="link-style w-full"
+																	>
+																		<span>{subItem.title}</span>
+																	</button>
+																</SidebarMenuSubButton>
+															</SidebarMenuSubItem>
+														)}
+													</div>
+												);
+											})}
 										</SidebarMenuSub>
 									</CollapsibleContent>
 								</>
