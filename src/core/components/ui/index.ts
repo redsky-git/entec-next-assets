@@ -1,3 +1,8 @@
+export { default as Accordion } from './accordion/AccordionDefault.tsx';
+export { default as AccordionContent } from './accordion/AccordionContent.tsx';
+export { default as AccordionItem } from './accordion/AccordionItem.tsx';
+export { default as AccordionTrigger } from './accordion/AccordionTrigger.tsx';
 export { default as Button } from './button/ButtonDefault.tsx';
 export { default as Checkbox } from './checkbox/CheckboxDefault.tsx';
+export { default as Icon } from './icon/IconDefault.tsx';
 export { default as Input } from './input/InputDefault.tsx';
