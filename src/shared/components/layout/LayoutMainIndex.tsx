@@ -3,7 +3,8 @@
 import type { IComponent } from '@/core/types/common';
 
 //import { Outlet, useLocation, useNavigate } from 'react-router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 import { NAV_DATA } from '@/shared/constants/nav-data';
 
@@ -11,8 +12,8 @@ import { AppSidebar } from '@/core/components/shadcn/app-sidebar';
 import { SiteHeader } from '@/core/components/shadcn/site-header';
 import { SidebarInset, SidebarProvider } from '@/core/components/shadcn/ui/sidebar';
 
-//import LayoutASide from './LayoutASide';
-//import { useHeadings } from '@/app/hooks/layout/use-headings';
+import LayoutASide from './LayoutASide';
+import { useHeadings } from '@/core/hooks/layout/use-headings';
 
 interface ILayoutMainIndexProps {
 	message?: string;
@@ -21,12 +22,21 @@ interface ILayoutMainIndexProps {
 }
 
 const LayoutMainIndex: IComponent<ILayoutMainIndexProps> = ({ children }) => {
+	const pathname = usePathname();
 	//const navigate = useNavigate();
 	//const location = useLocation();
 	//$router.setNaviInstance(navigate);
 	//$router.setLocationInstance(location);
 	// 우측 On this Page 바로가기 데이터 세팅을 위한 호출.
-	//useHeadings();
+	useHeadings();
+	// 예시: 특정 경로에서 sidebar를 자동으로 닫거나 열기
+	// 여기에 원하는 경로 패턴을 추가하세요
+	const pathsToCollapse = [
+		'/',
+		'/main',
+		// 추가로 sidebar를 닫고 싶은 경로를 여기에 추가
+	];
+	// 초기 상태를 pathname 기반으로 계산
 	const [asidebarOpen, setAsidebarOpen] = useState<boolean>(true);
 	// Sidebar 상태를 제어하기 위한 state
 	const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
@@ -38,28 +48,15 @@ const LayoutMainIndex: IComponent<ILayoutMainIndexProps> = ({ children }) => {
 
 	const [navData] = useState<any[]>(NAV_DATA);
 
-	// 특정 경로에서 sidebar 상태를 변경하는 로직
-	//useEffect(() => {
-	//	// 예시: 특정 경로에서 sidebar를 자동으로 닫거나 열기
-	//	// 여기에 원하는 경로 패턴을 추가하세요
-	//	const pathsToCollapse = [
-	//		'/',
-	//		// 추가로 sidebar를 닫고 싶은 경로를 여기에 추가
-	//	];
-
-	//	const currentPath = location.pathname;
-
-	//	// 경로가 pathsToCollapse에 포함되어 있으면 sidebar 닫기
-	//	if (pathsToCollapse.some((path) => currentPath === path)) {
-	//		setSidebarOpen(false);
-	//		setAsidebarOpen(false);
-	//	}
-	//	// 경로가 pathsToExpand에 포함되어 있으면 sidebar 열기
-	//	else {
-	//		setSidebarOpen(true);
-	//		setAsidebarOpen(true);
-	//	}
-	//}, [location.pathname]);
+	useEffect(() => {
+		if (pathsToCollapse.some((path) => pathname === path)) {
+			setSidebarOpen(false);
+			setAsidebarOpen(false);
+		} else {
+			setSidebarOpen(true);
+			setAsidebarOpen(true);
+		}
+	}, [pathname]);
 
 	return (
 		<>
@@ -80,7 +77,7 @@ const LayoutMainIndex: IComponent<ILayoutMainIndexProps> = ({ children }) => {
 										{children}
 									</div>
 								</div>
-								{/*{asidebarOpen ? <LayoutASide /> : null}*/}
+								{asidebarOpen ? <LayoutASide /> : null}
 							</div>
 						</SidebarInset>
 					</div>

@@ -26,6 +26,7 @@ const eslintConfig = defineConfig([
 			// TypeScript를 사용할 때는 "@typescript-eslint/no-unused-vars"를 대신 사용하는 것이 더 좋습니다.
 			//"no-unused-vars": "warn",
 			'@typescript-eslint/no-unused-vars': 'warn',
+			'react-hooks/set-state-in-effect': 'off',
 		},
 	},
 ]);

@@ -1,7 +1,7 @@
 'use client';
 
 import { SidebarIcon } from 'lucide-react';
-
+import { usePathname } from 'next/navigation';
 import { SearchForm } from '@/core/components/shadcn/search-form';
 import {
 	Breadcrumb,
@@ -16,6 +16,7 @@ import { Separator } from '@/core/components/shadcn/ui/separator';
 import { useSidebar } from '@/core/components/shadcn/ui/sidebar';
 
 export function SiteHeader() {
+	const pathname = usePathname();
 	const { toggleSidebar } = useSidebar();
 
 	return (
@@ -40,7 +41,7 @@ export function SiteHeader() {
 						</BreadcrumbItem>
 						<BreadcrumbSeparator />
 						<BreadcrumbItem>
-							<BreadcrumbPage>Data Fetching</BreadcrumbPage>
+							<BreadcrumbPage>{pathname}</BreadcrumbPage>
 						</BreadcrumbItem>
 					</BreadcrumbList>
 				</Breadcrumb>
