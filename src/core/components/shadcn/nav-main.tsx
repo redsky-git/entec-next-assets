@@ -48,6 +48,35 @@ export function NavMain({
 		}
 	};
 
+	//const activeDepth1 = (title: string) => {
+	//	const path = activeMenu.split('/');
+	//	const menuNm = title.split(' ');
+	//	console.log(path);
+	//	console.log(menuNm);
+	//	if (menuNm.length > 1) {
+	//		return String(menuNm[0]).toLocaleLowerCase() === path[2];
+	//	} else {
+	//		return title.toLocaleLowerCase() === path[2];
+	//	}
+	//};
+	const activeDepth1 = (title: string) => {
+		const path = activeMenu.split('/');
+		const menuNm = title.split(' ');
+		console.log(activeMenu, path);
+		console.log(title, menuNm);
+		//if (menuNm.length > 0) {
+	};
+
+	const collapsibleDepth1 = (menu: any) => {
+		const subMenu = menu.items;
+		for (let i = 0; i < subMenu.length; i++) {
+			if (subMenu[i].url === activeMenu) {
+				return true;
+			}
+		}
+		return menu.isActive;
+	};
+
 	return (
 		<SidebarGroup>
 			<SidebarGroupLabel>Example</SidebarGroupLabel>
@@ -56,12 +85,13 @@ export function NavMain({
 					<Collapsible
 						key={`${item.title}-${index}`}
 						asChild
-						defaultOpen={item.isActive}
+						defaultOpen={collapsibleDepth1(item)}
 					>
 						<SidebarMenuItem>
 							<SidebarMenuButton
 								asChild
 								tooltip={item.title}
+								isActive
 							>
 								<button
 									onClick={() => handlerNav(item.url)}

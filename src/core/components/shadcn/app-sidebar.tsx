@@ -5,7 +5,7 @@ import { Frame, LifeBuoy, Map, PieChart, Send } from 'lucide-react';
 import { NavMain } from './nav-main';
 //import { NavProjects } from '@/app/components/shadcn/nav-projects';
 //import { NavSecondary } from '@/app/components/shadcn/nav-secondary';
-import { NavUser } from './nav-user';
+//import { NavUser } from './nav-user';
 import {
 	Sidebar,
 	SidebarContent,
@@ -21,7 +21,7 @@ export function AppSidebar({ navData, ...props }: React.ComponentProps<typeof Si
 		user: {
 			name: 'ITCEN ENTEC',
 			email: 'm@itcen.com',
-			avatar: '/avatars/shadcn.jpg',
+			//avatar: '/avatars/shadcn.jpg',
 		},
 		navMain: [],
 		navSecondary: [
@@ -102,9 +102,7 @@ export function AppSidebar({ navData, ...props }: React.ComponentProps<typeof Si
 					className="mt-auto"
 				/>*/}
 			</SidebarContent>
-			<SidebarFooter>
-				<NavUser user={data.user} />
-			</SidebarFooter>
+			<SidebarFooter>{/*<NavUser user={data.user} />*/}</SidebarFooter>
 		</Sidebar>
 	);
 }
