@@ -10,7 +10,8 @@ import { Separator } from '@/core/components/shadcn/ui/separator';
 
 import UICodeBlock from '@/shared/components/common/ui/UICodeBlock';
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/core/components/ui';
+//import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/core/components/ui';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui';
 
 interface IAccordionExProps {
 	test?: string;

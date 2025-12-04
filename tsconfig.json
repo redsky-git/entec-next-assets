@@ -20,7 +20,8 @@
 			}
 		],
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@components/*": ["./src/core/components/*"]
 		},
 		"baseUrl": ".",
 		"typeRoots": ["./node_modules/@types", "./@types"] // type 루트 설정
