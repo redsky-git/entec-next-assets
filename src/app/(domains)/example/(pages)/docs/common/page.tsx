@@ -13,7 +13,7 @@ import UICodeBlock from '@/shared/components/common/ui/UICodeBlock';
 //import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/core/components/ui';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui';
 
-import { maskCardNumber } from '@domains/example/_common/card-utils';
+import MaskedCard from '@domains/example/_components/docs/MaskedCard';
 
 interface ICommonBizFuncExProps {
 	test?: string;
@@ -21,7 +21,6 @@ interface ICommonBizFuncExProps {
 
 const CommonBizFuncEx: IComponent<ICommonBizFuncExProps> = (): JSX.Element => {
 	const [value, setValue] = useState('item-1');
-	const maskedCardNumber = maskCardNumber('1234567812345678');
 	// useEffect hooks
 	useEffect(() => {
 		// ...
@@ -104,9 +103,7 @@ const CommonBizFuncEx: IComponent<ICommonBizFuncExProps> = (): JSX.Element => {
 								<TabsContent value="preview">
 									<Card>
 										<CardContent className="pt-5 pb-5 flex items-center justify-center">
-											<div>
-												<p>카드번호: {maskedCardNumber}</p>
-											</div>
+											<MaskedCard />
 										</CardContent>
 									</Card>
 								</TabsContent>
