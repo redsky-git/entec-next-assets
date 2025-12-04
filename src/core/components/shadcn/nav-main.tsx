@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { ChevronRight, type LucideIcon } from 'lucide-react';
+import { ChevronRight, ExternalLink, type LucideIcon } from 'lucide-react';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/core/components/shadcn/ui/collapsible';
 import {
@@ -154,6 +154,12 @@ export function NavMain({
 										</SidebarMenuSub>
 									</CollapsibleContent>
 								</>
+							) : findExternalUrl(item.url) ? (
+								<CollapsibleTrigger asChild>
+									<SidebarMenuAction>
+										<ExternalLink />
+									</SidebarMenuAction>
+								</CollapsibleTrigger>
 							) : null}
 						</SidebarMenuItem>
 					</Collapsible>

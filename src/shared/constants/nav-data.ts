@@ -1,5 +1,5 @@
 //import { BookOpen, FileSliders, Settings2, Component, LayoutTemplate } from 'lucide-react';
-import { BookOpen, FileSliders, Component, LayoutTemplate } from 'lucide-react';
+import { BookOpen, NotebookText, FileSliders, Component, LayoutTemplate } from 'lucide-react';
 
 export const NAV_DATA: any = [
 	{
@@ -143,6 +143,18 @@ export const NAV_DATA: any = [
 			{
 				title: '대시보드',
 				url: '/example/specific/dashboard',
+			},
+		],
+	},
+	{
+		title: 'Docs examples',
+		url: '#',
+		icon: NotebookText,
+		isActive: false,
+		items: [
+			{
+				title: '업무 공통 함수',
+				url: '/example/docs/common',
 			},
 		],
 	},
