@@ -27,7 +27,7 @@ interface IFetchAPIExProps {
 }
 
 const FetchAPIEx: IComponent<IFetchAPIExProps> = (): JSX.Element => {
-	const [data, setData] = useState<IPost[]>([]);
+	const [data, setData] = useState<IPost[] | null>([]);
 
 	// api 호출 버튼 클릭 handler
 	const handlerCallAPI = () => {
@@ -44,7 +44,7 @@ const FetchAPIEx: IComponent<IFetchAPIExProps> = (): JSX.Element => {
 
 	// api 결과 데이터 초기화 handler
 	const handlerInitData = () => {
-		//setData(null);
+		setData(null);
 	};
 
 	// textarea onChange handler
