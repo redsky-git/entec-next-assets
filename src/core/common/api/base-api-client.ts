@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import type { ApiInstanceConfig, CommonRequestInterceptorsConfig, ApiResponse } from '@app-types/common';
 
+// BaseApiClient 클래스는 Client, Server 모두 사용할 수 있는 기본 API 클라이언트 클래스이다.
 export class BaseApiClient {
 	// axiosInstance를 생성하여 request를 보낼 수 있도록 한다.
 	protected axiosInstance: AxiosInstance;
