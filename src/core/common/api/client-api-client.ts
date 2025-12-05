@@ -104,6 +104,6 @@ class ClientApiClient extends BaseApiClient {
 }
 
 // ClientApiClient 싱글톤 인스턴스
-export const clientApi = new ClientApiClient();
+export const clientAPI = new ClientApiClient();
 
 export default ClientApiClient;
