@@ -37,6 +37,21 @@ export type ApiResponse<T = any> = {
 	_rawResponse?: AxiosResponse<T> | null;
 };
 
+// api request options 타입 정의 (new)
+// headers: API 요청 시 헤더
+// timeout: API 요청 시간 초과 시간
+// cache: Next.js 특화 옵션 (서버에서만 사용)
+// revalidate: API 요청 결과 재검증 시간
+// tags: API 요청 결과 태그
+export type ApiRequestOptions = {
+	headers?: Record<string, string>;
+	timeout?: number;
+	// Next.js 특화 옵션 (서버에서만 사용)
+	cache?: RequestCache;
+	revalidate?: number | false;
+	tags?: string[];
+};
+
 // 현재 프로젝트에서 사용해야할 response타입.
 export type APIResponseType<T> = Promise<AxiosResponse<IResponse<T>>>;
 // 공통 response가 정해지지 않은 외부 api사용을 위한 경우 IResponse를 빼고 호출한다.
@@ -88,13 +103,3 @@ export interface IResponseHeader {
 	rsMsg: string;
 	svrDt: string;
 }
-
-// api client types 테스트 부분 ------------------------------------------------------------
-export type RequestOptions = {
-	headers?: Record<string, string>;
-	timeout?: number;
-	// Next.js 특화 옵션 (서버에서만 사용)
-	cache?: RequestCache;
-	revalidate?: number | false;
-	tags?: string[];
-};

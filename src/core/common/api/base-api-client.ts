@@ -48,13 +48,13 @@ export class BaseApiClient {
 	#requestInterceptor(
 		requestConfig: CommonRequestInterceptorsConfig,
 	): CommonRequestInterceptorsConfig | Promise<CommonRequestInterceptorsConfig> {
-		console.log(`[AXIOS] request interceptor`, requestConfig);
+		console.log(`[AXIOS] (base-api-client) request interceptor`, requestConfig);
 		return requestConfig;
 	}
 
 	// api response interceptor (API호출 후에 호출 하는 인터셉터)
 	#responseInterceptor(response: AxiosResponse): AxiosResponse | Promise<AxiosResponse> {
-		console.log(`[AXIOS] response interceptor`, response);
+		console.log(`[AXIOS] (base-api-client) response interceptor`, response);
 		return Promise.resolve(response);
 	}
 
