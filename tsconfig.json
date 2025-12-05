@@ -22,7 +22,8 @@
 		"paths": {
 			"@/*": ["./src/*"],
 			"@components/*": ["./src/core/components/*"],
-			"@domains/*": ["./src/app/(domains)/*"]
+			"@domains/*": ["./src/app/(domains)/*"],
+			"@app-types/*": ["./src/core/types/*"]
 		},
 		"baseUrl": ".",
 		"typeRoots": ["./node_modules/@types", "./@types"] // type 루트 설정
