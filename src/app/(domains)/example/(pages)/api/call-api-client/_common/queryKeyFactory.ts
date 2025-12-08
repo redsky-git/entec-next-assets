@@ -31,3 +31,16 @@ export const createQueryKey = (endpoint: string, params?: QueryParams): readonly
 
 	return [...pathSegments, cleanParams] as const;
 };
+
+/**
+ * 템플릿 리터럴 방식의 queryKey 생성
+ */
+export function qkey(strings: TemplateStringsArray, ...values: any[]) {
+	const endpoint = strings
+		.reduce((acc, str, i) => {
+			return acc + str + (values[i] !== undefined ? String(values[i]) : '');
+		}, '')
+		.trim();
+
+	return (params?: QueryParams) => createQueryKey(endpoint, params);
+}

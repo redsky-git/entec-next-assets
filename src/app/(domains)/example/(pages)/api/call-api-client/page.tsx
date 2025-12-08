@@ -8,7 +8,7 @@ import { Alert, AlertDescription, AlertTitle } from '@components/shadcn/ui/alert
 import { Button } from '@components/ui';
 import { Card, CardContent } from '@components/shadcn/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/shadcn/ui/tabs';
-import { AlertCircleIcon } from 'lucide-react';
+//import { AlertCircleIcon } from 'lucide-react';
 import { Separator } from '@components/shadcn/ui/separator';
 import { Textarea } from '@components/shadcn/ui/textarea';
 import { Label } from '@components/shadcn/ui/label';
@@ -16,6 +16,7 @@ import { Label } from '@components/shadcn/ui/label';
 import UICodeBlock from '@/shared/components/common/ui/UICodeBlock';
 // =====================================
 import { useApiQuery } from './_common/common-api';
+import { qkey } from './_common/queryKeyFactory';
 // =====================================
 
 interface IPost {
@@ -38,6 +39,9 @@ const CallApiClientEx: IComponent<ICallApiClientExProps> = (): JSX.Element => {
 	// api 호출 버튼 클릭 handler
 	const handlerCallAPI = () => {
 		refetch();
+
+		const queryKey = qkey`posts/${id}`({ status: 'active' });
+		console.log(queryKey);
 	};
 
 	const handlerCallPostsByIdAPI = (id: number) => {
