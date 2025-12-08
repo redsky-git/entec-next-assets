@@ -128,6 +128,10 @@ export const NAV_DATA: any = [
 				title: 'call API',
 				url: '/example/api/call-api',
 			},
+			{
+				title: 'call API client',
+				url: '/example/api/call-api-client',
+			},
 		],
 	},
 	{
