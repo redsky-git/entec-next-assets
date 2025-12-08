@@ -14,10 +14,11 @@ import { Textarea } from '@components/shadcn/ui/textarea';
 import { Label } from '@components/shadcn/ui/label';
 
 import UICodeBlock from '@/shared/components/common/ui/UICodeBlock';
-//import { clientAPI } from '@/core/common/api/client-api-client';
+import { clientAPI } from '@/core/common/api/client-api-client';
 // =====================================
 import { API_URI } from './_test-callapi/api/api-uri';
 import { callApi } from '@fetch/api';
+import { useQuery } from '@tanstack/react-query';
 // =====================================
 
 interface IPost {
@@ -31,7 +32,12 @@ interface ICallApiExProps {
 }
 
 const CallApiEx: IComponent<ICallApiExProps> = (): JSX.Element => {
-	const [data, setData] = useState<IPost[] | null>([]);
+	//const [data, setData] = useState<IPost[] | null>([]);
+
+	const { data } = useQuery({
+		queryKey: ['posts'],
+		queryFn: () => clientAPI.get('/posts').then((res) => res.data),
+	});
 
 	// api 호출 버튼 클릭 handler
 	const handlerCallAPI = () => {

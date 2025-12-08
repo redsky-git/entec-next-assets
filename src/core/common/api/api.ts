@@ -55,6 +55,7 @@ export async function callApi<T = any>(
 
 	try {
 		// 추 후 이 부분에 makeRequestConfig 메서드를 추가하여 config를 생성하는 로직을 추가 예정.
+		//makeRequestConfig(config);
 		return this.executeRequest<T>(config, null);
 
 		const data = await response.json();
