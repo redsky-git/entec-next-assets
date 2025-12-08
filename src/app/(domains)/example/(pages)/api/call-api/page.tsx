@@ -34,15 +34,17 @@ interface ICallApiExProps {
 const CallApiEx: IComponent<ICallApiExProps> = (): JSX.Element => {
 	//const [data, setData] = useState<IPost[] | null>([]);
 
-	const { data } = useQuery({
+	const { data, refetch } = useQuery({
 		queryKey: ['posts'],
 		queryFn: () => clientAPI.get('/posts').then((res) => res.data),
+		enabled: false,
 	});
 
 	// api 호출 버튼 클릭 handler
 	const handlerCallAPI = () => {
-		callApi(API_URI.EXAMPLE.GET_POSTS, { method: 'GET' }, { gcTime: 0 });
-		callApi(API_URI.EXAMPLE.GET_TODOS(1), { method: 'GET' }, { gcTime: 0 });
+		refetch();
+		//	callApi(API_URI.EXAMPLE.GET_POSTS, { method: 'GET' }, { gcTime: 0 });
+		//	callApi(API_URI.EXAMPLE.GET_TODOS(1), { method: 'GET' }, { gcTime: 0 });
 	};
 	//const handlerCallAPI = () => {
 	//	clientAPI
