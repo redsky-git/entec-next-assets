@@ -4,6 +4,7 @@ import '@/assets/styles/app.css';
 
 import LayoutMainIndex from '@/shared/components/layout/LayoutMainIndex';
 import LayoutASideProvider from '@/shared/components/common/context/LayoutASideProvider';
+import { QueryProvider } from './QueryProvider';
 
 export const metadata: Metadata = {
 	title: 'entec-next-assets',
@@ -17,9 +18,11 @@ const RootLayout: IComponent<IRootLayoutProps> = ({ children }) => {
 	return (
 		<html lang="en">
 			<body className="antialiased">
-				<LayoutASideProvider>
-					<LayoutMainIndex>{children}</LayoutMainIndex>
-				</LayoutASideProvider>
+				<QueryProvider>
+					<LayoutASideProvider>
+						<LayoutMainIndex>{children}</LayoutMainIndex>
+					</LayoutASideProvider>
+				</QueryProvider>
 			</body>
 		</html>
 	);

@@ -120,6 +120,14 @@ export const NAV_DATA: any = [
 				title: 'useReduxAPI',
 				url: '/example/api/use-redux-api-ex',
 			},
+			{
+				title: '◉ Test',
+				type: 'group',
+			},
+			{
+				title: 'call API',
+				url: '/example/api/call-api',
+			},
 		],
 	},
 	{

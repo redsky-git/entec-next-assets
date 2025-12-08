@@ -9,9 +9,14 @@ declare global {
 		//$router: IRouter;
 		//$util: IUtils;
 		//$ui: IUI;
+		// Tanstack Query Client를 전역 변수로 설정(Devtools Extension 사용 시 필요) =======
+		__TANSTACK_QUERY_CLIENT__: import('@tanstack/query-core').QueryClient;
 	}
 
 	//const $router: IRouter;
 	//const $util: IUtils;
 	//const $ui: IUI;
+
+	// Tanstack Query Client를 전역 변수로 설정(Devtools Extension 사용 시 필요) =======
+	const __TANSTACK_QUERY_CLIENT__: import('@tanstack/query-core').QueryClient;
 }

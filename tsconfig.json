@@ -23,7 +23,8 @@
 			"@/*": ["./src/*"],
 			"@components/*": ["./src/core/components/*"],
 			"@domains/*": ["./src/app/(domains)/*"],
-			"@app-types/*": ["./src/core/types/*"]
+			"@app-types/*": ["./src/core/types/*"],
+			"@fetch/*": ["./src/core/common/api/*"]
 		},
 		"baseUrl": ".",
 		"typeRoots": ["./node_modules/@types", "./@types"] // type 루트 설정
