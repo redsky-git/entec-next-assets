@@ -4,7 +4,7 @@ import type { IComponent } from '@app-types/common';
 import type { JSX } from 'react';
 import { useEffect, useState } from 'react';
 
-import { Alert, AlertDescription, AlertTitle } from '@components/shadcn/ui/alert';
+//import { Alert, AlertDescription, AlertTitle } from '@components/shadcn/ui/alert';
 import { Button } from '@components/ui';
 import { Card, CardContent } from '@components/shadcn/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/shadcn/ui/tabs';
@@ -16,7 +16,7 @@ import { Label } from '@components/shadcn/ui/label';
 import UICodeBlock from '@/shared/components/common/ui/UICodeBlock';
 // =====================================
 import { useApiQuery } from './_common/common-api';
-import { qkey } from './_common/queryKeyFactory';
+//import { qkey } from './_common/queryKeyFactory';
 // =====================================
 
 interface IPost {
@@ -33,6 +33,14 @@ const CallApiClientEx: IComponent<ICallApiClientExProps> = (): JSX.Element => {
 	const [id, setId] = useState<number>(1);
 	// posts 데이터 조회
 	const { data: postsData, refetch } = useApiQuery<IPost[]>('posts');
+	//const { data: postsData, refetch } = useApiQuery<IPost[]>('posts', {
+	//	method: 'POST',
+	//	body: {
+	//		title: 'test title',
+	//		body: 'test body',
+	//		userId: 1,
+	//	},
+	//});
 	// posts 데이터 조회 (id 파라미터 사용)
 	const { data: postsDataById, refetch: refetchPostsById } = useApiQuery<IPost>(`posts/${id}`);
 
@@ -40,15 +48,15 @@ const CallApiClientEx: IComponent<ICallApiClientExProps> = (): JSX.Element => {
 	const handlerCallAPI = () => {
 		refetch();
 
-		const queryKey = qkey`posts/${id}`({ status: 'active' });
-		console.log(queryKey);
+		//const queryKey = qkey`posts/${id}`({ status: 'active' });
+		//console.log(queryKey);
 	};
 
 	const handlerCallPostsByIdAPI = (id: number) => {
 		setId(id);
-		setTimeout(() => {
-			refetchPostsById();
-		}, 1000);
+		//setTimeout(() => {
+		//	refetchPostsById();
+		//}, 1000);
 	};
 
 	// textarea onChange handler

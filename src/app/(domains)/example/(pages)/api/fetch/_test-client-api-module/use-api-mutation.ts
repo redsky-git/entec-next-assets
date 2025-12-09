@@ -1,5 +1,5 @@
 import { useMutation, UseMutationOptions, UseMutationResult, useQueryClient } from '@tanstack/react-query';
-import { clientAPI } from './client-api-client';
+//import { clientAPI } from './client-api-client';
 import type { ApiResponse, ApiRequestOptions } from '@app-types/common';
 
 type HttpMethod = 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -66,7 +66,7 @@ export function useApiMutation<TData = unknown, TVariables = unknown>(
 			}
 
 			// 사용자 정의 onSuccess 콜백 실행
-			mutationOptions.onSuccess?.(data, variables, context);
+			//mutationOptions.onSuccess?.(data, variables, context);
 		},
 		...mutationOptions,
 	});

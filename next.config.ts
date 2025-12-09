@@ -10,6 +10,14 @@ const nextConfig: NextConfig = {
 			},
 		];
 	},
+	//async rewrites() {
+	//	return [
+	//		{
+	//			source: '/api/v1/:path*',
+	//			destination: 'https://hn.algolia.com/:path*', //https://hn.algolia.com/api/v1/search
+	//		},
+	//	];
+	//},
 };
 
 export default nextConfig;

@@ -60,7 +60,7 @@ const CallApiEx: IComponent<ICallApiExProps> = (): JSX.Element => {
 
 	// api 결과 데이터 초기화 handler
 	const handlerInitData = () => {
-		setData(null);
+		//setData(null);
 	};
 
 	// textarea onChange handler

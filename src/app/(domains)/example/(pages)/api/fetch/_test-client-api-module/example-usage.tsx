@@ -81,7 +81,7 @@ export function PostList({ page = 1, limit = 10 }: { page?: number; limit?: numb
 		queryKeys.post.list(filters),
 		API_ENDPOINTS.createEndpoint(API_ENDPOINTS.POST.GET_LIST, filters),
 		{
-			keepPreviousData: true, // 페이지 전환 시 이전 데이터 유지
+			//keepPreviousData: true, // 페이지 전환 시 이전 데이터 유지
 		},
 	);
 
@@ -103,7 +103,7 @@ export function CreatePostForm() {
 	const mutation = useApiMutation<Post, CreatePostRequest>(API_ENDPOINTS.POST.CREATE, {
 		method: 'POST',
 		// 성공 시 포스트 목록 쿼리 무효화
-		invalidateKeys: [queryKeys.post.lists()],
+		//invalidateKeys: [queryKeys.post.lists()],
 		onSuccess: (data) => {
 			console.log('게시글 생성 성공:', data);
 			alert('게시글이 생성되었습니다!');
@@ -152,7 +152,7 @@ export function CreatePostForm() {
 export function DeletePostButton({ postId }: { postId: number }) {
 	const mutation = useApiMutation<void, number>((id) => API_ENDPOINTS.POST.DELETE(id), {
 		method: 'DELETE',
-		invalidateKeys: [queryKeys.post.lists(), queryKeys.post.detail(postId)],
+		//invalidateKeys: [queryKeys.post.lists(), queryKeys.post.detail(postId)],
 		onSuccess: () => {
 			alert('게시글이 삭제되었습니다.');
 		},
@@ -179,9 +179,9 @@ export async function prefetchPostDetail(postId: number) {
 	await queryClient.prefetchQuery({
 		queryKey: queryKeys.post.detail(postId),
 		queryFn: async () => {
-			const response = await clientAPI.get<Post>(API_ENDPOINTS.POST.GET_DETAIL(postId));
-			if (!response.success) throw new Error(response.error);
-			return response.data;
+			//const response = await clientAPI.get<Post>(API_ENDPOINTS.POST.GET_DETAIL(postId));
+			//if (!response.success) throw new Error(response.error);
+			//return response.data;
 		},
 	});
 }

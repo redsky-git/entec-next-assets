@@ -33,9 +33,9 @@ export default function UserPage() {
 			<h1>사용자 목록</h1>
 			<button onClick={handleCreate}>사용자 추가</button>
 			<ul>
-				{users?.content?.map((user: any) => (
+				{/* users?.content?.map((user: any) => (
 					<li key={user.id}>{user.name}</li>
-				))}
+				))} */}
 			</ul>
 		</div>
 	);

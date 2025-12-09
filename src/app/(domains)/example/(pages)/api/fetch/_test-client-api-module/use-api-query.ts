@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
-import { clientAPI } from './client-api-client';
+//import { clientAPI } from './client-api-client';
 import type { ApiResponse, ApiRequestOptions } from '@app-types/common';
 
 interface UseApiQueryOptions<TData> extends Omit<
@@ -25,13 +25,14 @@ export function useApiQuery<TData = unknown>(
 	return useQuery<ApiResponse<TData>, Error, TData>({
 		queryKey,
 		queryFn: async () => {
-			const response = await clientAPI.get<TData>(endpoint, requestOptions);
+			//const response = await clientAPI.get<TData>(endpoint, requestOptions);
 
-			if (!response.success) {
-				throw new Error(response.error || 'API 요청 실패');
-			}
+			//if (!response.success) {
+			//	throw new Error(response.error || 'API 요청 실패');
+			//}
 
-			return response;
+			//return response;
+			return {} as ApiResponse<TData>;
 		},
 		select: (data) => data.data as TData, // ApiResponse에서 data만 추출
 		...queryOptions,
