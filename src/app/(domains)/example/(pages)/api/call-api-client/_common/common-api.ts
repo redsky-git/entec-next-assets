@@ -6,11 +6,11 @@ import { createQueryKey } from './queryKeyFactory';
 // 범용 API 훅과 함께 사용
 // ============================================
 
-type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+type THttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
-interface UseApiQueryOptions<T> {
+interface IUseApiOptions<T> {
 	/** HTTP Method (기본값: 'GET') */
-	method?: HttpMethod;
+	method?: THttpMethod;
 	/** Query parameters (주로 GET 요청 시 사용) */
 	params?: QueryParams;
 	/** Request body (POST/PUT/PATCH/DELETE 요청 시 사용) */
@@ -34,24 +34,24 @@ interface UseApiMutationOptions<TData, TVariables> {
  * API 조회를 위한 범용 훅 (GET, POST 조회용)
  * @example
  * // GET 요청
- * const { data } = useApiQuery<User>('users', { method: 'GET', params: { id: 1 } });
+ * const { data } = useApi<User>('users', { method: 'GET', params: { id: 1 } });
  *
  * // POST 요청 (body 전송)
- * const { data } = useApiQuery<SearchResult>('search', {
+ * const { data } = useApi<SearchResult>('search', {
  *   method: 'POST',
  *   body: { query: 'keyword', filters: ['tag1', 'tag2'] }
  * });
  *
  * // PUT 요청
- * const { data } = useApiQuery<User>('users/1', {
+ * const { data } = useApi<User>('users/1', {
  *   method: 'PUT',
  *   body: { name: 'John' }
  * });
  *
  * // DELETE 요청
- * const { data } = useApiQuery<void>('users/1', { method: 'DELETE' });
+ * const { data } = useApi<void>('users/1', { method: 'DELETE' });
  */
-function useApiQuery<T>(endpoint: string, options?: UseApiQueryOptions<T>) {
+function useApi<T>(endpoint: string, options?: IUseApiOptions<T>) {
 	const { method = 'GET', params, body, headers, queryOptions } = options || {};
 
 	return useQuery({
@@ -172,5 +172,5 @@ function useApiMutation<TData = unknown, TVariables = unknown>(
 	});
 }
 
-export { useApiQuery, useApiMutation };
-export type { UseApiQueryOptions, UseApiMutationOptions, HttpMethod };
+export { useApi, useApiMutation };
+export type { IUseApiOptions, UseApiMutationOptions, THttpMethod };

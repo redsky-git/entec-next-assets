@@ -15,7 +15,7 @@ import { Label } from '@components/shadcn/ui/label';
 
 import UICodeBlock from '@/shared/components/common/ui/UICodeBlock';
 // =====================================
-import { useApiQuery } from './_common/common-api';
+import { useApi } from './_common/common-api';
 //import { qkey } from './_common/queryKeyFactory';
 // =====================================
 
@@ -32,7 +32,7 @@ interface ICallApiClientExProps {
 const CallApiClientEx: IComponent<ICallApiClientExProps> = (): JSX.Element => {
 	const [id, setId] = useState<number>(1);
 	// posts 데이터 조회
-	const { data: postsData, refetch } = useApiQuery<IPost[]>('posts');
+	const { data: postsData, refetch } = useApi<IPost[]>('posts');
 	//const { data: postsData, refetch } = useApiQuery<IPost[]>('posts', {
 	//	method: 'POST',
 	//	body: {
@@ -42,7 +42,7 @@ const CallApiClientEx: IComponent<ICallApiClientExProps> = (): JSX.Element => {
 	//	},
 	//});
 	// posts 데이터 조회 (id 파라미터 사용)
-	const { data: postsDataById, refetch: refetchPostsById } = useApiQuery<IPost>(`posts/${id}`);
+	const { data: postsDataById, refetch: refetchPostsById } = useApi<IPost>(`posts/${id}`);
 
 	// api 호출 버튼 클릭 handler
 	const handlerCallAPI = () => {
