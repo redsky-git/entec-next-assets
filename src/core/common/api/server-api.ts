@@ -1,7 +1,8 @@
 'use server';
 
 import { ApiRequestConfig } from '@app-types/common/app-api-types';
-export interface ApiResponse<T = any> {
+
+interface ApiResponse<T = any> {
 	data: T;
 	status: number;
 	message?: string;
@@ -19,7 +20,7 @@ class ApiError extends Error {
 }
 
 // lib/api/config.ts
-export const API_CONFIG = {
+const API_CONFIG = {
 	baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || '',
 	timeout: 30000,
 	headers: {
@@ -109,7 +110,10 @@ class ServerApiClient {
 	}
 }
 
-// ClientApiClient 싱글톤 인스턴스
-export const serverAPI = new ServerApiClient();
-
-export default ServerApiClient;
+export async function serverApi<T = any>(
+	endpoint: string,
+	config: ApiRequestConfig = {},
+	nextConfig: NextFetchRequestConfig = {},
+): Promise<ApiResponse<T>> {
+	return await ServerApiClient.getInstance().serverApi<T>(endpoint, config, nextConfig);
+}

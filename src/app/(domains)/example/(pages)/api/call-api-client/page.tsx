@@ -16,7 +16,7 @@ import { Label } from '@components/shadcn/ui/label';
 import UICodeBlock from '@/shared/components/common/ui/UICodeBlock';
 // =====================================
 import { useApi } from './_common/common-api';
-import { callApi } from '@fetch/api';
+import { serverApi } from '@fetch/server-api';
 //import { qkey } from './_common/queryKeyFactory';
 // =====================================
 
@@ -34,7 +34,7 @@ const CallApiClientEx: IComponent<ICallApiClientExProps> = (): JSX.Element => {
 	const [id, setId] = useState<number>(1);
 	// posts 데이터 조회
 	const { data: postsData, refetch } = useApi<IPost[]>('posts');
-	const { data: searchData } = callApi<any>(`${process.env.NEXT_PUBLIC_EXTERNAL_API_BASE_URL}/api/v1/search`);
+
 	//const { data: postsData, refetch } = useApiQuery<IPost[]>('posts', {
 	//	method: 'POST',
 	//	body: {
@@ -68,7 +68,7 @@ const CallApiClientEx: IComponent<ICallApiClientExProps> = (): JSX.Element => {
 
 	// useEffect hooks
 	useEffect(() => {
-		// ...
+		serverApi<any>(`${process.env.NEXT_PUBLIC_EXTERNAL_API_BASE_URL}/api/v1/search`);
 	}, []);
 
 	return (

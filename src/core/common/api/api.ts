@@ -1,6 +1,5 @@
 import { clientAPI } from './client-api-client';
 import { ApiRequestConfig } from '@app-types/common/app-api-types';
-
 export interface ApiResponse<T = any> {
 	data: T;
 	status: number;
