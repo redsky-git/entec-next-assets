@@ -2,12 +2,8 @@
 
 import { BaseApiClient } from './base-api-client';
 import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import type {
-	ApiInstanceConfig,
-	CommonRequestInterceptorsConfig,
-	ApiRequestOptions,
-	ApiResponse,
-} from '@app-types/common';
+import type { ApiInstanceConfig, CommonRequestInterceptorsConfig, ApiResponse } from '@app-types/common';
+import type { ApiRequestConfig } from '@app-types/common/app-api-types';
 
 class ClientApiClient extends BaseApiClient {
 	constructor(config?: ApiInstanceConfig) {
@@ -42,65 +38,45 @@ class ClientApiClient extends BaseApiClient {
 		return Promise.reject(error);
 	}
 
-	async get<T>(apiEndpoint: string, options?: ApiRequestOptions): Promise<ApiResponse<T>> {
-		const config: AxiosRequestConfig = {
-			method: 'GET',
-			url: apiEndpoint,
-			headers: options?.headers,
-			timeout: options?.timeout,
-		};
-
-		// 추 후 이 부분에 makeRequestConfig 메서드를 추가하여 config를 생성하는 로직을 추가 예정.
-
-		return this.executeRequest<T>(config, null);
+	async request<T>(config: AxiosRequestConfig, token: string | null): Promise<ApiResponse<T>> {
+		return this.executeRequest<T>(config, token);
 	}
 
-	//async post<T>(endpoint: string, body?: any, options?: RequestOptions): Promise<ApiResponse<T>> {
-	//	const config: AxiosRequestConfig = {
-	//		method: 'POST',
-	//		url: endpoint,
-	//		data: body,
-	//		headers: options?.headers,
-	//		timeout: options?.timeout,
-	//	};
+	makeRequestConfig(endpoint: string, config: ApiRequestConfig): AxiosRequestConfig {
+		const { method = 'GET', params, headers = {}, body, cache } = config;
 
-	//	return this.executeRequest<T>(config, null);
-	//}
+		// url 조합 (http url 또는 api base url 조합)===================
+		let _url: URL;
+		const isHttpUrl = /^https?:\/\//.test(endpoint);
+		if (isHttpUrl) {
+			_url = new URL(endpoint);
+		} else {
+			_url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${endpoint}`);
+		}
 
-	//async put<T>(endpoint: string, body?: any, options?: RequestOptions): Promise<ApiResponse<T>> {
-	//	const config: AxiosRequestConfig = {
-	//		method: 'PUT',
-	//		url: endpoint,
-	//		data: body,
-	//		headers: options?.headers,
-	//		timeout: options?.timeout,
-	//	};
+		// GET 요청: query parameters 추가 =============================
+		if (method.toUpperCase() === 'GET' && params) {
+			Object.entries(params).forEach(([key, value]) => {
+				if (value !== undefined && value !== null) {
+					_url.searchParams.append(key, String(value));
+				}
+			});
+		}
 
-	//	return this.executeRequest<T>(config, null);
-	//}
+		const _fetchOptions: AxiosRequestConfig = {
+			method,
+			url: _url.toString(),
+			headers,
+			timeout: config.timeout || 30000, // request 시간 초과 시간 설정
+		};
 
-	//async patch<T>(endpoint: string, body?: any, options?: RequestOptions): Promise<ApiResponse<T>> {
-	//	const config: AxiosRequestConfig = {
-	//		method: 'PATCH',
-	//		url: endpoint,
-	//		data: body,
-	//		headers: options?.headers,
-	//		timeout: options?.timeout,
-	//	};
+		// POST, PUT, PATCH, DELETE 요청: body 추가
+		if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method.toUpperCase() as string) && body) {
+			_fetchOptions['data'] = JSON.stringify(body);
+		}
 
-	//	return this.executeRequest<T>(config, null);
-	//}
-
-	//async delete<T>(endpoint: string, options?: RequestOptions): Promise<ApiResponse<T>> {
-	//	const config: AxiosRequestConfig = {
-	//		method: 'DELETE',
-	//		url: endpoint,
-	//		headers: options?.headers,
-	//		timeout: options?.timeout,
-	//	};
-
-	//	return this.executeRequest<T>(config, null);
-	//}
+		return _fetchOptions;
+	}
 }
 
 // ClientApiClient 싱글톤 인스턴스

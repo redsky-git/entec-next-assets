@@ -1,6 +1,7 @@
 import { QueryParams } from './types';
 import { useQuery, UseQueryOptions, useMutation, UseMutationOptions } from '@tanstack/react-query';
 import { createQueryKey } from './queryKeyFactory';
+import { callApi } from '@fetch/api';
 
 // ============================================
 // 범용 API 훅과 함께 사용
@@ -18,7 +19,11 @@ interface IUseApiOptions<T> {
 	/** Custom headers */
 	headers?: Record<string, string>;
 	/** React Query options */
-	queryOptions?: UseQueryOptions<T>;
+	queryOptions?: UseQueryOptions<T> | UseMutationOptions<T>;
+	/** Request timeout */
+	timeout?: number;
+	/** API Call Type (기본값: 'client') */
+	apiCallType?: 'client' | 'server';
 }
 
 interface UseApiMutationOptions<TData, TVariables> {
@@ -31,7 +36,7 @@ interface UseApiMutationOptions<TData, TVariables> {
 }
 
 /**
- * API 조회를 위한 범용 훅 (GET, POST 조회용)
+ * 외부 API 조회를 위한 범용 훅 (GET, POST 조회용)
  * @example
  * // GET 요청
  * const { data } = useApi<User>('users', { method: 'GET', params: { id: 1 } });
@@ -51,54 +56,33 @@ interface UseApiMutationOptions<TData, TVariables> {
  * // DELETE 요청
  * const { data } = useApi<void>('users/1', { method: 'DELETE' });
  */
+// react-query 관련 코드가 내부 로직이고, callApi 함수는 api 호출 로직이다.
 function useApi<T>(endpoint: string, options?: IUseApiOptions<T>) {
-	const { method = 'GET', params, body, headers, queryOptions } = options || {};
+	const { params, body, queryOptions } = options || {};
 
 	return useQuery({
 		// queryKey: body가 있으면 body도 포함, params가 있으면 params 포함
 		queryKey: createQueryKey(endpoint, body || params),
 		queryFn: async () => {
-			const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${endpoint}`);
-
-			// GET 요청: query parameters 추가
-			if (method === 'GET' && params) {
-				Object.entries(params).forEach(([key, value]) => {
-					if (value !== undefined && value !== null) {
-						url.searchParams.append(key, String(value));
-					}
-				});
-			}
-
-			console.log(`[${method}] ${url.toString()}`);
-			if (body) {
-				console.log('Request Body:', body);
-			}
-
-			// fetch 옵션 설정
-			const fetchOptions: RequestInit = {
-				method,
-				headers: {
-					'Content-Type': 'application/json',
-					...headers,
-				},
-			};
+			const response = await callApi(endpoint, { ...options, apiCallType: 'client' });
 
 			// POST, PUT, PATCH, DELETE 요청: body 추가
-			if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method) && body) {
-				fetchOptions.body = JSON.stringify(body);
-			}
+			//if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method) && body) {
+			//	fetchOptions.body = JSON.stringify(body);
+			//}
 
-			const response = await fetch(url.toString(), fetchOptions);
-			if (!response.ok) {
-				throw new Error(`API Error: ${response.status} ${response.statusText}`);
-			}
+			//const response = await fetch(url.toString(), fetchOptions);
+			//if (!response.ok) {
+			//	throw new Error(`API Error: ${response.status} ${response.statusText}`);
+			//}
 
 			// 204 No Content 처리
-			if (response.status === 204) {
-				return null as T;
-			}
+			//if (response.status === 204) {
+			//	return null as T;
+			//}
 
-			return response.json() as Promise<T>;
+			//return response.data as T;
+			return {} as T;
 		},
 		...queryOptions,
 	});

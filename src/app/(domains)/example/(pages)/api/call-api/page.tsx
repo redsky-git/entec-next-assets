@@ -17,7 +17,7 @@ import UICodeBlock from '@/shared/components/common/ui/UICodeBlock';
 import { clientAPI } from '@/core/common/api/client-api-client';
 // =====================================
 import { API_URI } from './_test-callapi/api/api-uri';
-import { callApi } from '@fetch/api';
+import { callApi } from '@/core/common/api/api';
 import { useQuery } from '@tanstack/react-query';
 // =====================================
 

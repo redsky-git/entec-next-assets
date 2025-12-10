@@ -1,5 +1,21 @@
 import type { AxiosRequestConfig, InternalAxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from 'axios';
 
+// http query parameters 타입 정의
+export interface QueryParams {
+	[key: string]: string | number | boolean | undefined | null;
+}
+// api request config 타입 정의
+export interface ApiRequestConfig {
+	method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+	headers?: Record<string, string>;
+	body?: any;
+	cache?: RequestCache;
+	/** Query parameters (주로 GET 요청 시 사용) */
+	params?: QueryParams;
+	timeout?: number;
+	apiCallType?: 'client' | 'server';
+}
+
 // api instance config 타입 정의
 // axiosInstance를 생성할 때 사용되는 config 타입
 // baseURL: API 기본 URL
@@ -23,6 +39,7 @@ export type ApiInstanceConfig = {
  * @property {AxiosResponse<T> | null} [_rawResponse] - 원본 Axios 응답 객체(디버깅/세부 정보용, 옵션)
  */
 export type ApiResponse<T = any> = {
+	status?: number;
 	success: boolean;
 	data?: T;
 	error?: string;
