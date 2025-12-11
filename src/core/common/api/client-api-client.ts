@@ -42,6 +42,7 @@ class ClientApiClient extends BaseApiClient {
 		return this.executeRequest<T>(config, token);
 	}
 
+	// client api request config(axios request config) 생성
 	makeRequestConfig(endpoint: string, config: ApiRequestConfig): AxiosRequestConfig {
 		const { method = 'GET', params, headers = {}, body, cache } = config;
 

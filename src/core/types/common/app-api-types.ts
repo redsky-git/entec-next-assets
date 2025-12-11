@@ -40,7 +40,7 @@ export type ApiInstanceConfig = {
  */
 export type ApiResponse<T = any> = {
 	status?: number;
-	success: boolean;
+	success?: boolean;
 	data?: T;
 	error?: string;
 	message?: string;
@@ -53,6 +53,14 @@ export type ApiResponse<T = any> = {
 	 */
 	_rawResponse?: AxiosResponse<T> | null;
 };
+
+/**
+ * Next.js fetch 옵션 타입
+ */
+export interface NextFetchRequestConfig {
+	revalidate?: number | false;
+	tags?: string[];
+}
 
 // api request options 타입 정의 (new)
 // headers: API 요청 시 헤더

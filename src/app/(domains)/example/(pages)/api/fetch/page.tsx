@@ -31,15 +31,15 @@ const FetchAPIEx: IComponent<IFetchAPIExProps> = (): JSX.Element => {
 
 	// api 호출 버튼 클릭 handler
 	const handlerCallAPI = () => {
-		clientAPI
-			.get('/posts')
-			.then((res) => {
-				console.log(res);
-				setData(res.data as IPost[]);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
+		//clientAPI
+		//	.get('/posts')
+		//	.then((res) => {
+		//		console.log(res);
+		//		setData(res.data as IPost[]);
+		//	})
+		//	.catch((err) => {
+		//		console.error(err);
+		//	});
 	};
 
 	// api 결과 데이터 초기화 handler

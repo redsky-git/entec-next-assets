@@ -68,7 +68,9 @@ const CallApiClientEx: IComponent<ICallApiClientExProps> = (): JSX.Element => {
 
 	// useEffect hooks
 	useEffect(() => {
-		serverApi<any>(`${process.env.NEXT_PUBLIC_EXTERNAL_API_BASE_URL}/api/v1/search`);
+		serverApi<any>(`${process.env.NEXT_PUBLIC_EXTERNAL_API_BASE_URL}/api/v1/search`).then((response) => {
+			console.log('response data', response.data);
+		});
 	}, []);
 
 	return (
