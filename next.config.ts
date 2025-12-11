@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+	reactStrictMode: false, // Strict Mode 비활성화 (useEffect 중복 실행 방지)
 	async redirects() {
 		return [
 			{
