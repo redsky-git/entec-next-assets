@@ -46,7 +46,15 @@ class ServerApiClient {
 		const { method = 'GET', headers = {}, body, params } = config;
 
 		// URL 생성
-		let url = endpoint.startsWith('http') ? endpoint : `${API_CONFIG.baseURL}${endpoint}`;
+		// url 조합 (http url 또는 api base url 조합)===================
+		//let url = endpoint.startsWith('http') ? endpoint : `${API_CONFIG.baseURL}${endpoint}`;
+		let url: string = '';
+		const isHttpUrl = /^https?:\/\//.test(endpoint);
+		if (isHttpUrl) {
+			url = endpoint;
+		} else {
+			url = `${API_CONFIG.baseURL}/${endpoint}`;
+		}
 
 		// Query parameters 추가
 		if (params && Object.keys(params).length > 0) {
