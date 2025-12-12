@@ -21,6 +21,7 @@
 		],
 		"paths": {
 			"@/*": ["./src/*"],
+			"@hooks/*": ["./src/core/hooks/*"],
 			"@components/*": ["./src/core/components/*"],
 			"@domains/*": ["./src/app/(domains)/*"],
 			"@app-types/*": ["./src/core/types/*"],

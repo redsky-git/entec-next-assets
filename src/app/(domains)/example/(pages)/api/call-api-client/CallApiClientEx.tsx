@@ -15,7 +15,7 @@ import { Label } from '@components/shadcn/ui/label';
 
 import UICodeBlock from '@/shared/components/common/ui/UICodeBlock';
 // =====================================
-import { useApi } from './_common/common-api';
+import { useApi } from '@hooks/api';
 import { serverApi } from '@fetch/server-api';
 //import { qkey } from './_common/queryKeyFactory';
 // =====================================

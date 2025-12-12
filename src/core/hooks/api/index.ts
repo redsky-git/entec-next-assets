@@ -1,39 +1,7 @@
-import { QueryParams } from './types';
-import { useQuery, UseQueryOptions, useMutation, UseMutationOptions } from '@tanstack/react-query';
-import { createQueryKey } from './queryKeyFactory';
+import { useQuery, UseQueryResult, useMutation } from '@tanstack/react-query';
+import type { IUseApiOptions, IUseApiMutationOptions } from '@app-types/hooks';
+import { createQueryKey } from '@fetch/query-key-factory';
 import { callApi } from '@fetch/api';
-
-// ============================================
-// 범용 API 훅과 함께 사용
-// ============================================
-
-type THttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-
-interface IUseApiOptions<T> {
-	/** HTTP Method (기본값: 'GET') */
-	method?: THttpMethod;
-	/** Query parameters (주로 GET 요청 시 사용) */
-	params?: QueryParams;
-	/** Request body (POST/PUT/PATCH/DELETE 요청 시 사용) */
-	body?: Record<string, any>;
-	/** Custom headers */
-	headers?: Record<string, string>;
-	/** React Query options */
-	queryOptions?: UseQueryOptions<T> | UseMutationOptions<T>;
-	/** Request timeout */
-	timeout?: number;
-	/** API Call Type (기본값: 'client') */
-	apiCallType?: 'client' | 'server';
-}
-
-interface UseApiMutationOptions<TData, TVariables> {
-	/** HTTP Method (기본값: 'POST') */
-	method?: 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-	/** Custom headers */
-	headers?: Record<string, string>;
-	/** React Query mutation options */
-	mutationOptions?: UseMutationOptions<TData, Error, TVariables>;
-}
 
 /**
  * 외부 API 조회를 위한 범용 훅 (GET, POST 조회용)
@@ -57,32 +25,16 @@ interface UseApiMutationOptions<TData, TVariables> {
  * const { data } = useApi<void>('users/1', { method: 'DELETE' });
  */
 // react-query 관련 코드가 내부 로직이고, callApi 함수는 api 호출 로직이다.
-function useApi<T>(endpoint: string, options?: IUseApiOptions<T>) {
+function useApi<T>(endpoint: string, options?: IUseApiOptions<T>): UseQueryResult<NoInfer<T>, Error> {
 	const { params, body, queryOptions } = options || {};
 
 	return useQuery({
 		// queryKey: body가 있으면 body도 포함, params가 있으면 params 포함
 		queryKey: createQueryKey(endpoint, body || params),
 		queryFn: async () => {
-			const response = await callApi(endpoint, { ...options, apiCallType: 'client' });
+			const response = await callApi<T>(endpoint, { ...options, apiCallType: 'client' });
 
-			// POST, PUT, PATCH, DELETE 요청: body 추가
-			//if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method) && body) {
-			//	fetchOptions.body = JSON.stringify(body);
-			//}
-
-			//const response = await fetch(url.toString(), fetchOptions);
-			//if (!response.ok) {
-			//	throw new Error(`API Error: ${response.status} ${response.statusText}`);
-			//}
-
-			// 204 No Content 처리
-			//if (response.status === 204) {
-			//	return null as T;
-			//}
-
-			//return response.data as T;
-			return {} as T;
+			return response.data as T;
 		},
 		...queryOptions,
 	});
@@ -116,7 +68,7 @@ function useApi<T>(endpoint: string, options?: IUseApiOptions<T>) {
  */
 function useApiMutation<TData = unknown, TVariables = unknown>(
 	endpoint: string,
-	options?: UseApiMutationOptions<TData, TVariables>,
+	options?: IUseApiMutationOptions<TData, TVariables>,
 ) {
 	const { method = 'POST', headers, mutationOptions } = options || {};
 
@@ -157,4 +109,3 @@ function useApiMutation<TData = unknown, TVariables = unknown>(
 }
 
 export { useApi, useApiMutation };
-export type { IUseApiOptions, UseApiMutationOptions, THttpMethod };

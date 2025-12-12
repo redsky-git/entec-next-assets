@@ -1,4 +1,4 @@
-import { QueryParams } from './types';
+import { QueryParams } from '@app-types/common';
 
 /**
  * API endpoint와 params를 기반으로 queryKey를 동적 생성

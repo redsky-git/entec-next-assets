@@ -30,6 +30,8 @@ export interface IBaseApiClient {
 // Base API Client 레이아웃 정의 (END)------------------------------
 // --------------------------------------------------------------
 
+export type THttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+
 // http query parameters 타입 정의
 export interface QueryParams {
 	[key: string]: string | number | boolean | undefined | null;
