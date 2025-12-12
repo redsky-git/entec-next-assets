@@ -1,6 +1,10 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import type { ApiInstanceConfig, CommonRequestInterceptorsConfig, ApiResponse } from '@app-types/common';
-import type { IApiClient } from './i-api-client';
+import type {
+	ApiInstanceConfig,
+	CommonRequestInterceptorsConfig,
+	ApiResponse,
+	IBaseApiClient,
+} from '@app-types/common';
 
 /**
  * Axios 기반 API 클라이언트 베이스 클래스
@@ -8,7 +12,7 @@ import type { IApiClient } from './i-api-client';
  * Client 환경에서 사용되는 axios 기반의 HTTP 클라이언트입니다.
  * IApiClient 인터페이스를 구현하여 일관된 API를 제공합니다.
  */
-export class BaseAxiosClient implements IApiClient {
+export class BaseAxiosClient implements IBaseApiClient {
 	protected static instance: BaseAxiosClient;
 	// axiosInstance를 생성하여 request를 보낼 수 있도록 한다.
 	protected axiosInstance: AxiosInstance;
