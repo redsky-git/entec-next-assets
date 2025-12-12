@@ -1,10 +1,41 @@
 import type { AxiosRequestConfig, InternalAxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from 'axios';
 
+// --------------------------------------------------------------
+// Base API Client 레이아웃 정의 (BGN)------------------------------
+// --------------------------------------------------------------
+/**
+ * BASE API 클라이언트 공통 인터페이스
+ *
+ * Client, Server(axios, fetch) 모두 이 인터페이스를 구현합니다.
+ * 이를 통해 HTTP 클라이언트 구현체와 무관하게 일관된 API를 제공합니다.
+ */
+export interface IBaseApiClient {
+	/**
+	 * API 요청을 실행하는 메서드
+	 * @param config - 요청 설정
+	 * @param token - 인증 토큰 (선택사항)
+	 * @returns Promise<ApiResponse<T>>
+	 */
+	request<T>(config: any, token: string | null): Promise<ApiResponse<T>>;
+
+	/**
+	 * API 요청 설정을 생성하는 메서드
+	 * @param endpoint - API 엔드포인트
+	 * @param config - 요청 설정
+	 * @returns 각 구현체에 맞는 요청 설정 객체
+	 */
+	makeRequestConfig(endpoint: string, config: ApiRequestConfig): any;
+}
+// --------------------------------------------------------------
+// Base API Client 레이아웃 정의 (END)------------------------------
+// --------------------------------------------------------------
+
 // http query parameters 타입 정의
 export interface QueryParams {
 	[key: string]: string | number | boolean | undefined | null;
 }
 // api request config 타입 정의
+// api request config 타입 정의 (클라이언트/서버 공통, axios용)
 export interface ApiRequestConfig {
 	method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 	headers?: Record<string, string>;
@@ -12,9 +43,14 @@ export interface ApiRequestConfig {
 	cache?: RequestCache;
 	/** Query parameters (주로 GET 요청 시 사용) */
 	params?: QueryParams;
-	timeout?: number;
-	apiCallType?: 'client' | 'server';
+	timeout?: number; // axios 옵션
+	apiCallType?: 'client' | 'server'; // 내부 라우팅 제어용
 }
+
+// server 호출용 api config 타입 정의 (timeout, apiCallType 제외)
+export type ServerApiRequestConfig = Omit<ApiRequestConfig, 'timeout' | 'apiCallType'> & {
+	next?: NextFetchRequestConfig;
+};
 
 // api instance config 타입 정의
 // axiosInstance를 생성할 때 사용되는 config 타입
@@ -53,14 +89,6 @@ export type ApiResponse<T = any> = {
 	 */
 	_rawResponse?: AxiosResponse<T> | null;
 };
-
-/**
- * Next.js fetch 옵션 타입
- */
-export interface NextFetchRequestConfig {
-	revalidate?: number | false;
-	tags?: string[];
-}
 
 // api request options 타입 정의 (new)
 // headers: API 요청 시 헤더

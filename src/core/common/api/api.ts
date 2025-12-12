@@ -1,5 +1,6 @@
-import { clientAPI } from './client-api-client';
-import { ApiRequestConfig, ApiResponse, NextFetchRequestConfig } from '@app-types/common/app-api-types';
+import BaseAxiosClient from './base-axios-client';
+import BaseFetchClient from './base-fetch-client';
+import { ApiRequestConfig, ApiResponse } from '@app-types/common/app-api-types';
 
 export class ApiError extends Error {
 	constructor(
@@ -12,15 +13,6 @@ export class ApiError extends Error {
 	}
 }
 
-// api config(server용)
-export const API_CONFIG = {
-	baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || '',
-	timeout: 30000,
-	headers: {
-		'Content-Type': 'application/json',
-	},
-};
-
 /**
  * 통합 API 호출 함수 - Client/Server 컴포넌트 모두 사용 가능
  *
@@ -31,7 +23,7 @@ export const API_CONFIG = {
  *
  * @param endpoint - API 엔드포인트 경로
  * @param config - 요청 설정
- * @param nextConfig - Next.js fetch 옵션 (서버 사이드에서만 적용)
+ * @param nextConfig - Next.js fetch 옵션 (서버 사이드에서만 적용)(글로벌 타입(NextFetchRequestConfig), from next/types/global.d.ts)
  * @returns Promise<ApiResponse<T>>
  *
  * @example
@@ -62,13 +54,13 @@ export async function callApi<T = any>(
 	if (apiCallType === 'client') {
 		console.log('[callApi] Client 환경 - axios 사용');
 		try {
-			const reqConfig = clientAPI.makeRequestConfig(endpoint, config);
+			const reqConfig = BaseAxiosClient.makeRequestConfig(endpoint, config);
 
 			// 토큰이 필요한 경우 로직
 			const token = null;
 			// 예: token = localStorage.getItem('access_token');
 
-			const response = await clientAPI.request<T>(reqConfig, token);
+			const response = await BaseAxiosClient.request<T>(reqConfig, token);
 
 			return {
 				data: response.data as T,
@@ -83,83 +75,23 @@ export async function callApi<T = any>(
 		}
 	}
 
-	console.log('[callApi] Server 환경 - fetch 사용');
 	// 3. Server 환경 - fetch 사용
-	const { method = 'GET', headers = {}, body, params, cache } = config;
+	if (apiCallType === 'server') {
+		console.log('[callApi] Server 환경 - fetch 사용');
+		const reqConfig = BaseFetchClient.makeRequestConfig(endpoint, config, nextConfig);
 
-	// url 조합 (http url 또는 api base url 조합)===================
-	let url: string;
-	const isHttpUrl = /^https?:\/\//.test(endpoint);
-	if (isHttpUrl) {
-		url = endpoint;
-	} else {
-		url = `${API_CONFIG.baseURL}/${endpoint}`;
-	}
+		// 토큰이 필요한 경우 로직
+		const token = null;
+		// 예: token = localStorage.getItem('access_token');
 
-	// GET 메서드인 경우 Query parameters 추가 ===================
-	if (method.toUpperCase() === 'GET' && params && Object.keys(params).length > 0) {
-		const searchParams = new URLSearchParams();
-		Object.entries(params).forEach(([key, value]) => {
-			if (value !== undefined && value !== null) {
-				searchParams.append(key, String(value));
-			}
-		});
-		const separator = url.includes('?') ? '&' : '?';
-		url += `${separator}${searchParams.toString()}`;
-	}
-
-	// 요청 헤더 재구성 (기본 헤더 + 사용자 헤더) ===================
-	const requestHeaders: HeadersInit = {
-		...API_CONFIG.headers,
-		...headers,
-	};
-
-	try {
-		// fetch 요청 처리 시작 ============================================
-		console.log('[callApi] 요청:', { url, method, body, nextConfig });
-
-		// fetch 옵션 구성
-		const fetchOptions: RequestInit & { next?: NextFetchRequestConfig } = {
-			method,
-			headers: requestHeaders,
-			body: body ? JSON.stringify(body) : undefined,
-		};
-
-		// 캐시 옵션 추가
-		if (cache) {
-			fetchOptions.cache = cache;
-		}
-
-		// Next.js 캐싱 옵션 추가
-		if (Object.keys(nextConfig).length > 0) {
-			fetchOptions.next = nextConfig;
-		}
-
-		const response = await fetch(url, fetchOptions);
-		const data = await response.json();
-
-		if (!response.ok) {
-			console.error('[callApi] 에러:', {
-				status: response.status,
-				statusText: response.statusText,
-				data,
-			});
-			throw new ApiError(response.status, data.message || data.error || response.statusText || 'API 요청 실패', data);
-		}
-
-		console.log('[callApi] 성공:', { status: response.status, data });
-
+		const response = await BaseFetchClient.request<T>(reqConfig, token);
 		return {
-			data,
-			status: response.status,
-			message: data.message,
+			data: response.data as T,
+			status: response.status || 200,
+			message: (response.data as any)?.message,
 		};
-	} catch (error) {
-		if (error instanceof ApiError) {
-			throw error;
-		}
-
-		console.error('[callApi] 예외 발생:', error);
-		throw new ApiError(500, error instanceof Error ? error.message : '알 수 없는 오류', error);
 	}
+
+	// 4. 예상치 못한 apiCallType
+	throw new ApiError(500, `Invalid apiCallType: ${apiCallType}`);
 }
