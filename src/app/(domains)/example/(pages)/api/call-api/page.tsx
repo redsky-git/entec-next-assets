@@ -14,12 +14,7 @@ import { Textarea } from '@components/shadcn/ui/textarea';
 import { Label } from '@components/shadcn/ui/label';
 
 import UICodeBlock from '@/shared/components/common/ui/UICodeBlock';
-import { clientAPI } from '@/core/common/api/client-api-client';
-// =====================================
-import { API_URI } from './_test-callapi/api/api-uri';
-import { callApi } from '@/core/common/api/api';
-import { useQuery } from '@tanstack/react-query';
-// =====================================
+import { useApi } from '@hooks/api';
 
 interface IPost {
 	id: number;
@@ -33,6 +28,7 @@ interface ICallApiExProps {
 
 const CallApiEx: IComponent<ICallApiExProps> = (): JSX.Element => {
 	//const [data, setData] = useState<IPost[] | null>([]);
+	const { data, refetch } = useApi<IPost[]>('posts', { queryOptions: { enabled: false } });
 
 	//const { data, refetch } = useQuery({
 	//	queryKey: ['posts'],
@@ -42,7 +38,7 @@ const CallApiEx: IComponent<ICallApiExProps> = (): JSX.Element => {
 
 	// api 호출 버튼 클릭 handler
 	const handlerCallAPI = () => {
-		//refetch();
+		refetch();
 		//	callApi(API_URI.EXAMPLE.GET_POSTS, { method: 'GET' }, { gcTime: 0 });
 		//	callApi(API_URI.EXAMPLE.GET_TODOS(1), { method: 'GET' }, { gcTime: 0 });
 	};
@@ -137,12 +133,12 @@ const CallApiEx: IComponent<ICallApiExProps> = (): JSX.Element => {
 										<CardContent className="flex items-center justify-center">
 											<div className="grid w-full gap-2">
 												<Label htmlFor="message-2">결과 데이터</Label>
-												{/*<Textarea
+												<Textarea
 													value={`Response Data (api서버 도메인/posts) : ${JSON.stringify(data)}`}
 													className="h-60"
 													placeholder="Response Data (api서버 도메인/api/v1/search)"
 													onChange={handlerTextarea}
-												/>*/}
+												/>
 												<Button onClick={handlerCallAPI}>Send API</Button>
 												<Button onClick={handlerInitData}>결과 데이터 초기화</Button>
 											</div>
@@ -196,7 +192,7 @@ function SamplePage() {
 							<CardContent className="flex items-center justify-center">
 								<div className="grid w-full gap-2">
 									<Label htmlFor="message-2">posts결과 데이터를 이용하여 화면 그리기 예제</Label>
-									{/*{Array.isArray(data) && data.length > 0 ? (
+									{Array.isArray(data) && data.length > 0 ? (
 										<div className="rounded-lg border bg-background p-4 shadow-sm">
 											<ul
 												className="divide-y divide-border overflow-y-auto"
@@ -224,7 +220,7 @@ function SamplePage() {
 										<div className="flex flex-col items-center justify-center h-32 text-muted-foreground">
 											<p>불러온 데이터가 없습니다. 위의 "Send API" 버튼을 눌러 데이터를 가져오세요.</p>
 										</div>
-									)}*/}
+									)}
 								</div>
 							</CardContent>
 						</Card>

@@ -10,8 +10,8 @@ export interface IUseApiOptions<T> {
 	body?: Record<string, any>;
 	/** Custom headers */
 	headers?: Record<string, string>;
-	/** React Query options */
-	queryOptions?: UseQueryOptions<T> | UseMutationOptions<T>;
+	/** React Query options (queryKey와 queryFn은 내부에서 자동 생성됨) */
+	queryOptions?: Omit<UseQueryOptions<T, Error, T>, 'queryKey' | 'queryFn'>;
 	/** Request timeout */
 	timeout?: number;
 	/** API Call Type (기본값: 'client') */

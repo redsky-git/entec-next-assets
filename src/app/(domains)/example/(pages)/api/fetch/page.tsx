@@ -2,7 +2,7 @@
 
 import type { IComponent } from '@app-types/common';
 import type { JSX } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { Alert, AlertDescription, AlertTitle } from '@components/shadcn/ui/alert';
 import { Button } from '@components/ui';
@@ -14,7 +14,7 @@ import { Textarea } from '@components/shadcn/ui/textarea';
 import { Label } from '@components/shadcn/ui/label';
 
 import UICodeBlock from '@/shared/components/common/ui/UICodeBlock';
-import { clientAPI } from '@/core/common/api/client-api-client';
+import { useApi } from '@hooks/api';
 
 interface IPost {
 	id: number;
@@ -27,10 +27,12 @@ interface IFetchAPIExProps {
 }
 
 const FetchAPIEx: IComponent<IFetchAPIExProps> = (): JSX.Element => {
-	const [data, setData] = useState<IPost[] | null>([]);
+	//const [data, setData] = useState<IPost[] | null>([]);
+	const { data, refetch } = useApi<IPost[]>('posts', { queryOptions: { enabled: false } });
 
 	// api 호출 버튼 클릭 handler
 	const handlerCallAPI = () => {
+		refetch();
 		//clientAPI
 		//	.get('/posts')
 		//	.then((res) => {
@@ -44,7 +46,7 @@ const FetchAPIEx: IComponent<IFetchAPIExProps> = (): JSX.Element => {
 
 	// api 결과 데이터 초기화 handler
 	const handlerInitData = () => {
-		setData(null);
+		//setData(null);
 	};
 
 	// textarea onChange handler
