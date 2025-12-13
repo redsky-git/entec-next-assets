@@ -60,6 +60,13 @@ const UseApiEx: IComponent<IUseApiExProps> = (): JSX.Element => {
 	const { data: postsDataById } = useApi<IPost>(`${process.env.NEXT_PUBLIC_EXTERNAL_API_BASE_URL}/posts/${id}`);
 	//==============================================================================
 
+	const {
+		data: usersData,
+		refetch: refetchUsers,
+		isLoading: isLoadingUsers,
+		error: usersError,
+	} = useApi<any[]>(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/example/api/users`);
+
 	// api 호출(/photos) 버튼 클릭 handler
 	const handlerCallPhotosAPI = () => {
 		refetchPhotos();
@@ -85,6 +92,11 @@ const UseApiEx: IComponent<IUseApiExProps> = (): JSX.Element => {
 					<div className="flex flex-col gap-2">
 						<div className="flex items-start justify-between">
 							<h1 className="scroll-m-20 text-4xl font-semibold tracking-tight sm:text-3xl xl:text-4xl">useApi</h1>
+							{usersData?.map((user) => (
+								<li key={user.id}>
+									{user.name} ({user.email})
+								</li>
+							))}
 							<div className="docs-nav bg-background/80 border-border/50 fixed inset-x-0 bottom-0 isolate z-50 flex items-center gap-2 border-t px-6 py-4 backdrop-blur-sm sm:static sm:z-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-1.5 sm:backdrop-blur-none">
 								&nbsp;
 							</div>
