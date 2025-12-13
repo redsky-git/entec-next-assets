@@ -63,7 +63,7 @@ export const NAV_DATA: any = [
 		],
 	},
 	{
-		title: 'API Usage',
+		title: 'API-usage',
 		url: '#',
 		icon: FileSliders,
 		isActive: false,
@@ -74,11 +74,11 @@ export const NAV_DATA: any = [
 			},
 			{
 				title: '$router.goBack()',
-				url: '/example/api/router-goback',
+				url: '/example/api-usage/router-goback',
 			},
 			{
 				title: '$router.push()',
-				url: '/example/api/router-push',
+				url: '/example/api-usage/router-push',
 			},
 			{
 				title: '◉ $ui',
@@ -86,11 +86,11 @@ export const NAV_DATA: any = [
 			},
 			{
 				title: '$ui.alert()',
-				url: '/example/api/ui-alert-dialog-ex',
+				url: '/example/api-usage/ui-alert-dialog-ex',
 			},
 			{
 				title: '$ui.confirm()',
-				url: '/example/api/ui-confirm-dialog-ex',
+				url: '/example/api-usage/ui-confirm-dialog-ex',
 			},
 			{
 				title: '◉ $util',
@@ -98,15 +98,15 @@ export const NAV_DATA: any = [
 			},
 			{
 				title: '$util.date',
-				url: '/example/api/util-date-ex',
+				url: '/example/api-usage/util-date-ex',
 			},
 			{
 				title: '$util.format',
-				url: '/example/api/util-format-ex',
+				url: '/example/api-usage/util-format-ex',
 			},
 			{
 				title: '$util.string',
-				url: '/example/api/util-string-ex',
+				url: '/example/api-usage/util-string-ex',
 			},
 			{
 				title: '◉ Hooks',
@@ -114,11 +114,11 @@ export const NAV_DATA: any = [
 			},
 			{
 				title: 'useApi',
-				url: '/example/api/use-api-ex',
+				url: '/example/api-usage/use-api-ex',
 			},
 			{
 				title: 'useReduxAPI',
-				url: '/example/api/use-redux-api-ex',
+				url: '/example/api-usage/use-redux-api-ex',
 			},
 			{
 				title: '◉ Test',
@@ -126,11 +126,11 @@ export const NAV_DATA: any = [
 			},
 			{
 				title: 'call API',
-				url: '/example/api/call-api',
+				url: '/example/api-usage/call-api',
 			},
 			{
 				title: 'call API client',
-				url: '/example/api/call-api-client',
+				url: '/example/api-usage/call-api-client',
 			},
 		],
 	},
