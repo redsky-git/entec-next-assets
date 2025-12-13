@@ -16,6 +16,7 @@ import { Label } from '@components/shadcn/ui/label';
 import UICodeBlock from '@/shared/components/common/ui/UICodeBlock';
 import Image from 'next/image';
 import useApiEx01Image from '@assets/images/ex/useApiEx01.png';
+import useApiEx02Image from '@assets/images/ex/useApiEx02.png';
 
 // =====================================
 import { useApi } from '@hooks/api';
@@ -449,6 +450,23 @@ function SamplePage() {
 											<p>불러온 데이터가 없습니다. 위의 "Send API" 버튼을 눌러 데이터를 가져오세요.</p>
 										</div>
 									)}
+								</div>
+							</CardContent>
+						</Card>
+						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+							Chrome 개발자 도구의 TanStack Query(확장팩) 탭에서 다음과 같이 요청 데이터가 표시되는 것을 확인할 수
+							있습니다.
+						</p>
+						<Card>
+							<CardContent className="flex items-center justify-center">
+								<div className="flex justify-center w-full">
+									<Image
+										src={useApiEx02Image}
+										alt="Chrome 개발자 도구의 TanStack Query 탭 예제 이미지"
+										className="w-[70%] h-auto max-w-full rounded-md border"
+										style={{ maxWidth: '70%' }}
+										priority
+									/>
 								</div>
 							</CardContent>
 						</Card>
