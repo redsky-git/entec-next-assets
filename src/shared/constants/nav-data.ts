@@ -113,7 +113,7 @@ export const NAV_DATA: any = [
 				type: 'group',
 			},
 			{
-				title: 'useAPI',
+				title: 'useApi',
 				url: '/example/api/use-api-ex',
 			},
 			{

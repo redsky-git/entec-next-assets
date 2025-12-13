@@ -25,7 +25,8 @@
 			"@components/*": ["./src/core/components/*"],
 			"@domains/*": ["./src/app/(domains)/*"],
 			"@app-types/*": ["./src/core/types/*"],
-			"@fetch/*": ["./src/core/common/api/*"]
+			"@fetch/*": ["./src/core/common/api/*"],
+			"@assets/*": ["./src/assets/*"]
 		},
 		"baseUrl": ".",
 		"typeRoots": ["./node_modules/@types", "./@types"] // type 루트 설정

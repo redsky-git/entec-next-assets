@@ -73,7 +73,7 @@ export default async function Page() {
 		// 서버에서 데이터를 가져옴 (SSR)
 		const response = await serverApi<IPost[]>('posts');
 		/*
-		 const response = await serverApi<IPost[]>('http://ws.bus.go.kr/api/rest/buspos/getBusPosByRouteSt', {
+		 const response = await serverApi<IPost[]>('http://ws.bus.go.kr/api/rest/buspos/getBusPosByRouteStList', {
 			params: {
 				serviceKey: 'bdee51ff8fe2dae8bfc4cbdd7df75a7dfce5f5e2801242ece9bb9aad9b64ec60',
 				busRouteId: '100100118',
