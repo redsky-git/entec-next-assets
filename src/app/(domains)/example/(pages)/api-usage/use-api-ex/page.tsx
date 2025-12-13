@@ -59,13 +59,14 @@ const UseApiEx: IComponent<IUseApiExProps> = (): JSX.Element => {
 	// posts 데이터 조회 (id 파라미터 사용)
 	const { data: postsDataById } = useApi<IPost>(`${process.env.NEXT_PUBLIC_EXTERNAL_API_BASE_URL}/posts/${id}`);
 	//==============================================================================
-
+	// useApi(route handler 사용) example ===========================================
 	const {
 		data: usersData,
 		refetch: refetchUsers,
 		isLoading: isLoadingUsers,
 		error: usersError,
 	} = useApi<any[]>(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/example/api/users`);
+	//==============================================================================
 
 	// api 호출(/photos) 버튼 클릭 handler
 	const handlerCallPhotosAPI = () => {
