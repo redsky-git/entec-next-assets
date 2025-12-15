@@ -513,7 +513,10 @@ function SamplePage() {
 						<div className="w-full flex-1 py-4">
 							<RunCodeblock
 								title="useApi('@routes/example/api/users') Route Handler 사용 예제"
-								codeTemplate={`import { useApi } from '@hooks/api';
+								codeTemplate={`// ========================================================
+// 화면 코드
+// ========================================================
+import { useApi } from '@hooks/api';
 
 interface IUser {
 	id: number;
