@@ -102,8 +102,14 @@ export class BaseAxiosClient implements IBaseApiClient {
 		// url 조합 (http url 또는 api base url 조합)===================
 		let _url: URL;
 		const isHttpUrl = /^https?:\/\//.test(endpoint);
+		const isRoutesPrefix = endpoint.startsWith('@routes');
+
 		if (isHttpUrl) {
 			_url = new URL(endpoint);
+		} else if (isRoutesPrefix) {
+			// @routes 접두사 제거 후 NEXT_PUBLIC_ROUTE_API_URL 사용
+			const routeEndpoint = endpoint.replace(/^@routes\/?/, '');
+			_url = new URL(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/${routeEndpoint}`);
 		} else {
 			_url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${endpoint}`);
 		}

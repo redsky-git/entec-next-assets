@@ -17,6 +17,8 @@ import UICodeBlock from '@/shared/components/common/ui/UICodeBlock';
 import Image from 'next/image';
 import useApiEx01Image from '@assets/images/ex/useApiEx01.png';
 import useApiEx02Image from '@assets/images/ex/useApiEx02.png';
+import useApiEx03Image from '@assets/images/ex/useApiEx03.png';
+import useApiEx04Image from '@assets/images/ex/useApiEx04.png';
 import RunCodeblock from '@domains/example/_components/example/RunCodeblock';
 
 // =====================================
@@ -35,6 +37,22 @@ interface IPhoto {
 	title: string;
 	url: string;
 	thumbnailUrl: string;
+}
+
+interface IUser {
+	id: number;
+	name: string;
+	username: string;
+	email: string;
+	phone: string;
+	website: string;
+	province: string;
+	city: string;
+	district: string;
+	street: string;
+	zipcode: string;
+	createdAt: string;
+	updatedAt: string;
 }
 
 interface IUseApiExProps {
@@ -63,10 +81,10 @@ const UseApiEx: IComponent<IUseApiExProps> = (): JSX.Element => {
 	// useApi(route handler 사용) example ===========================================
 	const {
 		data: usersData,
-		refetch: refetchUsers,
-		isLoading: isLoadingUsers,
-		error: usersError,
-	} = useApi<any[]>(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/example/api/users`);
+		//refetch: refetchUsers,
+		//isLoading: isLoadingUsers,
+		//error: usersError,
+	} = useApi<IUser[]>('@routes/example/api/users');
 	//==============================================================================
 
 	// api 호출(/photos) 버튼 클릭 handler
@@ -94,11 +112,6 @@ const UseApiEx: IComponent<IUseApiExProps> = (): JSX.Element => {
 					<div className="flex flex-col gap-2">
 						<div className="flex items-start justify-between">
 							<h1 className="scroll-m-20 text-4xl font-semibold tracking-tight sm:text-3xl xl:text-4xl">useApi</h1>
-							{usersData?.map((user) => (
-								<li key={user.id}>
-									{user.name} ({user.email})
-								</li>
-							))}
 							<div className="docs-nav bg-background/80 border-border/50 fixed inset-x-0 bottom-0 isolate z-50 flex items-center gap-2 border-t px-6 py-4 backdrop-blur-sm sm:static sm:z-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-1.5 sm:backdrop-blur-none">
 								&nbsp;
 							</div>
@@ -169,6 +182,24 @@ function SamplePage() {
 									className="h-60 rounded-t-md rounded-b-none border-b-0"
 								/>
 							</RunCodeblock>
+							<div className="flex flex-col gap-2 pt-6">
+								<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+									Chrome 개발자 도구의 Network 탭에서 다음과 같이 요청이 발생하는 것을 확인할 수 있습니다.
+								</p>
+							</div>
+							<Card>
+								<CardContent className="flex items-center justify-center">
+									<div className="flex justify-center w-full">
+										<Image
+											src={useApiEx01Image}
+											alt="Chrome 개발자 도구의 Network 탭 예제 이미지"
+											className="w-[60%] h-auto max-w-full rounded-md border"
+											style={{ maxWidth: '60%' }}
+											priority
+										/>
+									</div>
+								</CardContent>
+							</Card>
 						</div>
 						{/* example 블럭요서 END */}
 						{/* example 블럭요서 START */}
@@ -437,6 +468,211 @@ function SamplePage() {
 									<Image
 										src={useApiEx02Image}
 										alt="Chrome 개발자 도구의 TanStack Query 탭 예제 이미지"
+										className="w-[70%] h-auto max-w-full rounded-md border"
+										style={{ maxWidth: '70%' }}
+										priority
+									/>
+								</div>
+							</CardContent>
+						</Card>
+						{/* API 호출 결과 데이터를 이용하여 화면 그리기 예제 END */}
+						{/* example 블럭요서 START */}
+						<div className="flex flex-col gap-2 pt-6">
+							<div className="flex items-start justify-between">
+								<h2
+									data-shorcut="true"
+									className="scroll-m-20 text-3xl font-semibold tracking-tight sm:text-3xl xl:text-3xl"
+								>
+									useApi(Route Handler 사용 예제)
+								</h2>
+								<div className="docs-nav bg-background/80 border-border/50 fixed inset-x-0 bottom-0 isolate z-50 flex items-center gap-2 border-t px-6 py-4 backdrop-blur-sm sm:static sm:z-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-1.5 sm:backdrop-blur-none">
+									&nbsp;
+								</div>
+							</div>
+							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+								useApi 훅에서 Route Handler를 사용하여 API를 호출할 수 있습니다.
+							</p>
+							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+								<code className="bg-muted relative rounded-md px-[0.3rem] py-[0.2rem] font-mono text-[1.1rem] wrap-break-word outline-none font-bold">
+									`src/app/(domains)/example/api/users`
+								</code>
+								디렉토리에{' '}
+								<code className="bg-muted relative rounded-md px-[0.3rem] py-[0.2rem] font-mono text-[1.1rem] wrap-break-word outline-none font-bold">
+									`route.ts`
+								</code>{' '}
+								파일을 만들어 서버로 API를 요청하는 Route Handler를 먼저 구현합니다.
+							</p>
+							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+								이렇게 구현 되어있는 Router Handler를 `useApi` 훅에서 사용하여 API를 호출할 수 있습니다.
+							</p>
+							<p className="text-blue-600 text-[1.05rem] text-balance sm:text-base">
+								Router Handler에서 구현된 API임을 구분하기 위해 <strong>endpoint 파라미터</strong> 앞에{' '}
+								<strong>@routes</strong> 접두사를 붙입니다.
+							</p>
+						</div>
+						<div className="w-full flex-1 py-4">
+							<RunCodeblock
+								title="useApi('@routes/example/api/users') Route Handler 사용 예제"
+								codeTemplate={`import { useApi } from '@hooks/api';
+
+interface IUser {
+	id: number;
+	name: string;
+	username: string;
+	email: string;
+	phone: string;
+	website: string;
+	province: string;
+	city: string;
+	district: string;
+	street: string;
+	zipcode: string;
+	createdAt: string;
+	updatedAt: string;
+}
+
+function SamplePage() {
+	// useApi 훅(Route Handler) 사용
+	const { data: usersData } = useApi<IUser[]>('@routes/example/api/users');
+
+	return (
+		<Textarea
+			value={JSON.stringify(usersData || [], null, 2)}
+			className="h-60"
+		/>
+	);
+}
+
+// ========================================================
+// src/app/(domains)/example/api/users/route.ts
+// ========================================================
+import { NextRequest, NextResponse } from 'next/server';
+import { serverApi } from '@/core/common/api/server-api';
+
+/**
+ * GET /example/api/users
+ * koreanjson.com의 users 데이터를 가져옵니다.
+ */
+export async function GET(_request: NextRequest) {
+	try {
+		// serverApi를 사용하여 외부 API 호출
+		const response = await serverApi<any[]>(
+			'https://koreanjson.com/users',
+			{
+				method: 'GET',
+			},
+			{
+				revalidate: 0, // 항상 최신 데이터 fetch (SSR, 캐싱 X)
+				tags: ['users', 'financial'], // 데이터 분류 및 감사 추적을 위한 다중 태그
+			},
+		);
+
+		// 성공 응답
+		return NextResponse.json(response.data, { status: 200 });
+	} catch (error) {
+		// 에러 응답
+		return NextResponse.json(
+			{
+				success: false,
+				error: error instanceof Error ? error.message : '사용자 목록을 가져오는데 실패했습니다.',
+				data: null,
+			},
+			{ status: 500 },
+		);
+	}
+}`}
+							>
+								<Textarea
+									value={JSON.stringify(usersData || [], null, 2)}
+									placeholder="Response Data (https://jsonplaceholder.typicode.com/posts)"
+									onChange={handlerTextarea}
+									className="h-60 rounded-t-md rounded-b-none border-b-0"
+								/>
+							</RunCodeblock>
+						</div>
+						{/* example 블럭요서 END */}
+						{/* API 호출 결과 데이터를 이용하여 화면 그리기 예제 START */}
+						<Card className="mt-4">
+							<CardContent className="flex items-center justify-center">
+								<div className="grid w-full gap-2">
+									<Label htmlFor="message-2">"@routes/example/api/users" 결과 데이터를 이용하여 화면 그리기 예제</Label>
+									{Array.isArray(usersData) && usersData.length > 0 ? (
+										<div className="rounded-lg border bg-background p-4 shadow-sm">
+											<ul
+												className="divide-y divide-border overflow-y-auto"
+												style={{ maxHeight: 340 }}
+											>
+												{usersData.map((user: IUser) => (
+													<li
+														key={user.id}
+														className="py-4 flex items-start gap-4 hover:bg-accent/30 transition-colors rounded-md px-2"
+													>
+														<div className="flex-1">
+															<div className="flex items-center gap-2 mb-1">
+																<span className="font-semibold text-primary">
+																	{user.name || `이름 없음`}
+																	{` (${user.email})`}
+																</span>
+																<span className="text-xs text-muted-foreground">{`#${user.phone}`}</span>
+															</div>
+															<p className="text-sm text-muted-foreground">
+																{user.city ? (
+																	<span className="italic">{`${user.province} ${user.city} ${user.district} ${user.street}`}</span>
+																) : (
+																	<span className="italic">본문 없음</span>
+																)}
+															</p>
+														</div>
+													</li>
+												))}
+											</ul>
+										</div>
+									) : (
+										<div className="flex flex-col items-center justify-center h-32 text-muted-foreground">
+											<p>불러온 데이터가 없습니다. user 데이터를 가져오세요.</p>
+										</div>
+									)}
+								</div>
+							</CardContent>
+						</Card>
+						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+							Chrome 개발자 도구의 TanStack Query(확장팩) 탭에서 다음과 같이 요청 데이터가 표시되는 것을 확인할 수
+							있습니다.
+						</p>
+						<Card>
+							<CardContent className="flex items-center justify-center">
+								<div className="flex justify-center w-full">
+									<Image
+										src={useApiEx03Image}
+										alt="Chrome 개발자 도구의 TanStack Query 탭 예제 이미지"
+										className="w-[70%] h-auto max-w-full rounded-md border"
+										style={{ maxWidth: '70%' }}
+										priority
+									/>
+								</div>
+							</CardContent>
+						</Card>
+						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+							Chrome 개발자 도구의 Network 탭에서 다음과 같이 users 데이터를 요청하는 것을 확인할 수 있습니다. 또한
+							Route Handler로 구현된 API를 호출하면 CORS 이슈가 발생하지 않습니다.
+						</p>
+						<ul className="list-inside list-disc text-sm">
+							<li>Route Handler로 구현된 API는 App Router 경로를 그대로 사용합니다. ex) /example/api/users</li>
+							<li>
+								Route Handler로 구현된 API는 클라이언트에서 호출할 때 @routes 접두사를 붙여서 호출합니다. ex)
+								useApi('@routes/example/api/users')
+							</li>
+							<li>
+								network 탭에서 호출된 API 요청 경로를 확인해 보면 Next.js 경로와 동일한 경로로 호출되는 것을 확인할 수
+								있습니다. 왜냐하면 Route Handler로 구현된 API는 Next.js 서버에서 실행되기 때문입니다.
+							</li>
+						</ul>
+						<Card>
+							<CardContent className="flex items-center justify-center">
+								<div className="flex justify-center w-full">
+									<Image
+										src={useApiEx04Image}
+										alt="Chrome 개발자 도구의 Network 탭 예제 이미지"
 										className="w-[70%] h-auto max-w-full rounded-md border"
 										style={{ maxWidth: '70%' }}
 										priority

@@ -13,6 +13,7 @@ import { serverApi } from '@/core/common/api/server-api';
 export async function GET(_request: NextRequest) {
 	try {
 		// serverApi를 사용하여 외부 API 호출
+		console.log('[GET /example/api/users] Route Handler 호출');
 		const response = await serverApi<any[]>(
 			'https://koreanjson.com/users',
 			{
