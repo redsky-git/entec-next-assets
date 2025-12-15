@@ -121,6 +121,14 @@ export const NAV_DATA: any = [
 				url: '/example/api-guides/use-redux-api-ex',
 			},
 			{
+				title: '◉ Common Functions',
+				type: 'group',
+			},
+			{
+				title: 'serverApi',
+				url: '/example/api-guides/server-api-ex',
+			},
+			{
 				title: '◉ Test',
 				type: 'group',
 			},

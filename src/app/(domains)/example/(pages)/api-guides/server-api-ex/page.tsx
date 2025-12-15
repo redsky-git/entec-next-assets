@@ -14,12 +14,13 @@ import { Textarea } from '@components/shadcn/ui/textarea';
 import { Label } from '@components/shadcn/ui/label';
 
 import UICodeBlock from '@/shared/components/common/ui/UICodeBlock';
-import Image from 'next/image';
-import useApiEx01Image from '@assets/images/ex/useApiEx01.png';
-import useApiEx02Image from '@assets/images/ex/useApiEx02.png';
-import useApiEx03Image from '@assets/images/ex/useApiEx03.png';
-import useApiEx04Image from '@assets/images/ex/useApiEx04.png';
+//import Image from 'next/image';
+//import ServerApiEx01Image from '@assets/images/ex/ServerApiEx01.png';
+//import ServerApiEx02Image from '@assets/images/ex/ServerApiEx02.png';
+//import ServerApiEx03Image from '@assets/images/ex/ServerApiEx03.png';
+//import ServerApiEx04Image from '@assets/images/ex/ServerApiEx04.png';
 import RunCodeblock from '@domains/example/_components/example/RunCodeblock';
+import { Icon, Alert, AlertDescription, AlertTitle } from '@components/ui';
 
 // =====================================
 import { useApi } from '@hooks/api';
@@ -55,11 +56,11 @@ interface IUser {
 	updatedAt: string;
 }
 
-interface IUseApiExProps {
+interface IServerApiExProps {
 	test?: string;
 }
 
-const UseApiEx: IComponent<IUseApiExProps> = (): JSX.Element => {
+const ServerApiEx: IComponent<IServerApiExProps> = (): JSX.Element => {
 	const [id, setId] = useState<number>(1);
 
 	// basic useApi example ========================================================
@@ -111,23 +112,112 @@ const UseApiEx: IComponent<IUseApiExProps> = (): JSX.Element => {
 				<div className="mx-auto flex w-full  min-w-0 flex-1 flex-col gap-8 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
 					<div className="flex flex-col gap-2">
 						<div className="flex items-start justify-between">
-							<h1 className="scroll-m-20 text-4xl font-semibold tracking-tight sm:text-3xl xl:text-4xl">useApi</h1>
+							<h1 className="scroll-m-20 text-4xl font-semibold tracking-tight sm:text-3xl xl:text-4xl">serverApi</h1>
 							<div className="docs-nav bg-background/80 border-border/50 fixed inset-x-0 bottom-0 isolate z-50 flex items-center gap-2 border-t px-6 py-4 backdrop-blur-sm sm:static sm:z-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-1.5 sm:backdrop-blur-none">
 								&nbsp;
 							</div>
 						</div>
 						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
-							React Query(TanStack Query) 기반으로 구축된 <strong>REST API 호출용 커스텀 훅</strong>입니다.
+							<strong>serverApi</strong> 함수는 Server Component나 Server Action에서 사용되는 API 호출 함수입니다.
 						</p>
 						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
-							내부적으로 axios와 fetch를 활용하여 GET, POST, PUT, DELETE 등 다양한 HTTP 메서드를 지원합니다. 자동 캐싱,
-							로딩/에러 상태 관리, 백그라운드 재검증, refetch 등 강력한 데이터 페칭 기능을 제공하며, TypeScript 제네릭을
-							통해 API 응답 데이터의 타입 안정성을 보장합니다.
+							내부적으로 fetch 기반의 API 호출을 수행합니다.
 						</p>
-						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
-							Client Component에서 호출하는 API이므로 호출 도메인이 다르면 CORS 이슈가 발생할 수 있으며, Component가
-							모두 렌더링된 후 API 요청이 발생하므로 SEO 최적화에 부적합합니다.
-						</p>
+						<Alert className="border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950">
+							<Icon
+								name="MessageCircleWarning"
+								className="text-blue-600 dark:text-blue-400"
+							/>
+							<AlertTitle className="text-blue-900 dark:text-blue-100">serverApi 사용 이유</AlertTitle>
+							<AlertDescription className="text-blue-800 dark:text-blue-200">
+								<div className="flex flex-col gap-2">
+									{/*<p className="text-sm">...</p>*/}
+									<ul className="list-disc list-inside text-sm space-y-1">
+										<li>
+											<strong>CORS 이슈 방지 : </strong>클라이언트에서 직접 외부 API(Domain이 다른 API)를 호출하면
+											CORS(Cross-Origin Resource Sharing) 정책으로 인해 차단될 수 있습니다. serverApi는 서버에서
+											실행되므로 CORS 제약이 없습니다.
+										</li>
+										<li>
+											<strong>Next.js 캐싱 및 ISR(Incremental Static Regeneration) 지원 : </strong>serverApi는 Next.js의
+											확장된 fetch 옵션을 사용할 수 있습니다:
+											<ul className="list-disc list-inside text-sm space-y-1 pl-4 border-l-2 border-blue-500">
+												<li>revalidate : 지정된 시간(초) 후 데이터를 재검증 (ISR)</li>
+												<li>tags : 특정 태그로 캐시를 그룹화하여 revalidateTag()로 수동 무효화 가능</li>
+											</ul>
+										</li>
+										<li>
+											<strong>SEO 최적화 : </strong>serverApi로 가져온 데이터는 서버에서 HTML에 포함되어 전달되므로 검색
+											엔진이 콘텐츠를 크롤링할 수 있습니다.
+										</li>
+										<li>
+											<strong>보안 강화 : </strong>API 키, 인증 토큰 등 민감한 정보를 클라이언트에 노출하지 않음. 또한
+											서버에서만 실행되므로 Network 탭에서 외부 API URL이 직접 노출되지 않음
+										</li>
+									</ul>
+								</div>
+							</AlertDescription>
+						</Alert>
+						<Alert className="border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950">
+							<Icon
+								name="MessageCircleWarning"
+								className="text-blue-600 dark:text-blue-400"
+							/>
+							<AlertTitle className="text-blue-900 dark:text-blue-100">언제 serverApi를 사용해야 할까?</AlertTitle>
+							<AlertDescription className="text-blue-800 dark:text-blue-200">
+								<div className="flex flex-col gap-2">
+									{/*<p className="text-sm">...</p>*/}
+									<ul className="list-disc list-inside text-sm space-y-1">
+										<li>
+											<strong>serverApi 사용 권장 상황 : </strong>
+											<div className="bg-blue-100/50 dark:bg-blue-900/20 p-3 rounded text-sm space-y-1">
+												<div className="flex">
+													<span className="font-semibold">Route Handler 구현 : </span>
+													<span> &nbsp;외부 API를 프록시하여 CORS 해결</span>
+												</div>
+												<div className="flex">
+													<span className="font-semibold">Server Component에서 데이터 페칭 : </span>
+													<span> &nbsp;SSR/SSG를 통한 초기 렌더링 최적화</span>
+												</div>
+												<div className="flex">
+													<span className="font-semibold">Server Action에서 데이터 처리 : </span>
+													<span> &nbsp;폼 제출, 데이터 변경 등 서버 액션</span>
+												</div>
+												<div className="flex">
+													<span className="font-semibold">SEO가 중요한 페이지 : </span>
+													<span> &nbsp;검색 엔진 크롤링을 위한 서버 렌더링</span>
+												</div>
+												<div className="flex">
+													<span className="font-semibold">민감한 API 키 사용 : </span>
+													<span> &nbsp;클라이언트 노출 방지</span>
+												</div>
+												<div className="flex">
+													<span className="font-semibold">캐싱/재검증이 필요한 경우 : </span>
+													<span> &nbsp;ISR, 태그 기반 캐시 무효화</span>
+												</div>
+											</div>
+										</li>
+										<li>
+											<strong>useApi (클라이언트) 사용이 적합한 상황 : </strong>
+											<div className="bg-blue-100/50 dark:bg-blue-900/20 p-3 rounded text-sm space-y-1">
+												<div className="flex">
+													<span className="font-semibold">사용자 인터랙션 기반 데이터&nbsp;:&nbsp;</span>
+													<span>버튼 클릭, 무한 스크롤 등</span>
+												</div>
+												<div className="flex">
+													<span className="font-semibold">실시간 데이터 갱신&nbsp;:&nbsp;</span>
+													<span>폴링, 동적 쿼리</span>
+												</div>
+												<div className="flex">
+													<span className="font-semibold">클라이언트 상태와 연동&nbsp;:&nbsp;</span>
+													<span>로그인 상태, 사용자 입력 기반 요청</span>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</AlertDescription>
+						</Alert>
 					</div>
 					<div className="w-full flex-1 *:data-[slot=alert]:first:mt-0">
 						<Separator className="my-6" />
@@ -194,13 +284,13 @@ function SamplePage() {
 							<Card>
 								<CardContent className="flex items-center justify-center">
 									<div className="flex justify-center w-full">
-										<Image
-											src={useApiEx01Image}
+										{/*<Image
+											src={ServerApiEx01Image}
 											alt="Chrome 개발자 도구의 Network 탭 예제 이미지"
 											className="w-[60%] h-auto max-w-full rounded-md border"
 											style={{ maxWidth: '60%' }}
 											priority
-										/>
+										/>*/}
 									</div>
 								</CardContent>
 							</Card>
@@ -469,13 +559,13 @@ function SamplePage() {
 						<Card>
 							<CardContent className="flex items-center justify-center">
 								<div className="flex justify-center w-full">
-									<Image
-										src={useApiEx02Image}
+									{/*<Image
+										src={ServerApiEx02Image}
 										alt="Chrome 개발자 도구의 TanStack Query 탭 예제 이미지"
 										className="w-[70%] h-auto max-w-full rounded-md border"
 										style={{ maxWidth: '70%' }}
 										priority
-									/>
+									/>*/}
 								</div>
 							</CardContent>
 						</Card>
@@ -512,13 +602,6 @@ function SamplePage() {
 							<p className="text-blue-600 text-[1.05rem] text-balance sm:text-base">
 								Router Handler에서 구현된 API임을 구분하기 위해 <strong>endpoint 파라미터</strong> 앞에{' '}
 								<strong>@routes</strong> 접두사를 붙입니다.
-							</p>
-						</div>
-
-						<div className="w-full flex-1 py-4">
-							<h3 className="text-2xl font-semibold tracking-tight sm:text-2xl xl:text-2xl">데이터 흐름</h3>
-							<p className="text-[1.05rem] text-balance sm:text-base">
-								Client Component (useApi) → Route Handler → serverApi → 외부 API
 							</p>
 						</div>
 						<div className="w-full flex-1 py-4">
@@ -656,13 +739,13 @@ export async function GET(_request: NextRequest) {
 						<Card>
 							<CardContent className="flex items-center justify-center">
 								<div className="flex justify-center w-full">
-									<Image
-										src={useApiEx03Image}
+									{/*<Image
+										src={ServerApiEx03Image}
 										alt="Chrome 개발자 도구의 TanStack Query 탭 예제 이미지"
 										className="w-[70%] h-auto max-w-full rounded-md border"
 										style={{ maxWidth: '70%' }}
 										priority
-									/>
+									/>*/}
 								</div>
 							</CardContent>
 						</Card>
@@ -684,13 +767,13 @@ export async function GET(_request: NextRequest) {
 						<Card>
 							<CardContent className="flex items-center justify-center">
 								<div className="flex justify-center w-full">
-									<Image
-										src={useApiEx04Image}
+									{/*<Image
+										src={ServerApiEx04Image}
 										alt="Chrome 개발자 도구의 Network 탭 예제 이미지"
 										className="w-[70%] h-auto max-w-full rounded-md border"
 										style={{ maxWidth: '70%' }}
 										priority
-									/>
+									/>*/}
 								</div>
 							</CardContent>
 						</Card>
@@ -702,5 +785,5 @@ export async function GET(_request: NextRequest) {
 	);
 };
 
-UseApiEx.displayName = 'UseApiEx';
-export default UseApiEx;
+ServerApiEx.displayName = 'ServerApiEx';
+export default ServerApiEx;
