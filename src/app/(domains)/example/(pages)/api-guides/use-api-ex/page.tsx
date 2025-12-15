@@ -17,6 +17,7 @@ import UICodeBlock from '@/shared/components/common/ui/UICodeBlock';
 import Image from 'next/image';
 import useApiEx01Image from '@assets/images/ex/useApiEx01.png';
 import useApiEx02Image from '@assets/images/ex/useApiEx02.png';
+import RunCodeblock from '@domains/example/_components/example/RunCodeblock';
 
 // =====================================
 import { useApi } from '@hooks/api';
@@ -132,59 +133,16 @@ const UseApiEx: IComponent<IUseApiExProps> = (): JSX.Element => {
 							</p>
 							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
 								다음 예제는
-								<code className="bg-muted relative rounded-md px-[0.3rem] py-[0.2rem] font-mono text-[0.8rem] break-words outline-none">
+								<code className="bg-muted relative rounded-md px-[0.3rem] py-[0.2rem] font-mono text-[0.8rem] wrap-break-word outline-none">
 									https://jsonplaceholder.typicode.com/posts
 								</code>
 								로 데이터를 가져오기 위한 요청을 보냅니다.
 							</p>
 						</div>
 						<div className="w-full flex-1 py-4">
-							<Tabs defaultValue="preview">
-								<TabsList>
-									<TabsTrigger value="preview">Preview</TabsTrigger>
-									<TabsTrigger value="code">Code</TabsTrigger>
-								</TabsList>
-								<TabsContent value="preview">
-									<Card className="mb-4">
-										<CardContent className="flex items-center justify-center">
-											<div className="grid w-full gap-2">
-												<Label htmlFor="message-2">
-													useApi('https://jsonplaceholder.typicode.com/posts') 호출 결과 데이터
-												</Label>
-												<Textarea
-													value={JSON.stringify(basicUseApiData || [], null, 2)}
-													placeholder="Response Data (https://jsonplaceholder.typicode.com/posts)"
-													onChange={handlerTextarea}
-													className="h-60"
-												/>
-											</div>
-										</CardContent>
-									</Card>
-									<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
-										Chrome 개발자 도구의 Network 탭에서 다음과 같이 요청이 발생하는 것을 확인할 수 있습니다.
-									</p>
-									<Card>
-										<CardContent className="flex items-center justify-center">
-											<div className="flex justify-center w-full">
-												<Image
-													src={useApiEx01Image}
-													alt="Chrome 개발자 도구의 Network 탭 예제 이미지"
-													className="w-[60%] h-auto max-w-full rounded-md border"
-													style={{ maxWidth: '60%' }}
-													priority
-												/>
-											</div>
-										</CardContent>
-									</Card>
-								</TabsContent>
-								<TabsContent value="code">
-									<Card>
-										<CardContent className="grid gap-6">
-											<UICodeBlock
-												language="tsx"
-												filename="SamplePage.tsx"
-											>
-												{`import { useApi } from '@hooks/api';
+							<RunCodeblock
+								title="useApi('https://jsonplaceholder.typicode.com/posts') 호출 결과 데이터"
+								codeTemplate={`import { useApi } from '@hooks/api';
 
 interface IPost {
 	id: number;
@@ -203,11 +161,14 @@ function SamplePage() {
 		/>
 	);
 }`}
-											</UICodeBlock>
-										</CardContent>
-									</Card>
-								</TabsContent>
-							</Tabs>
+							>
+								<Textarea
+									value={JSON.stringify(basicUseApiData || [], null, 2)}
+									placeholder="Response Data (https://jsonplaceholder.typicode.com/posts)"
+									onChange={handlerTextarea}
+									className="h-60 rounded-t-md rounded-b-none border-b-0"
+								/>
+							</RunCodeblock>
 						</div>
 						{/* example 블럭요서 END */}
 						{/* example 블럭요서 START */}
