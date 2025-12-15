@@ -2,7 +2,7 @@
 
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { getQueryClient } from './query-client-config';
+import { getQueryClient } from '@/core/common/config/react-query';
 import { ReactNode, useState, useEffect } from 'react';
 
 interface QueryProviderProps {

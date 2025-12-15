@@ -3,8 +3,7 @@ import type { Metadata } from 'next';
 import '@/assets/styles/app.css';
 
 import LayoutMainIndex from '@/shared/components/layout/LayoutMainIndex';
-import LayoutASideProvider from '@/shared/components/common/context/LayoutASideProvider';
-import { QueryProvider } from './QueryProvider';
+import { AppProviders } from '@/core/common/providers';
 
 export const metadata: Metadata = {
 	title: 'entec-next-assets',
@@ -18,11 +17,9 @@ const RootLayout: IComponent<IRootLayoutProps> = ({ children }) => {
 	return (
 		<html lang="en">
 			<body className="antialiased">
-				<QueryProvider>
-					<LayoutASideProvider>
-						<LayoutMainIndex>{children}</LayoutMainIndex>
-					</LayoutASideProvider>
-				</QueryProvider>
+				<AppProviders>
+					<LayoutMainIndex>{children}</LayoutMainIndex>
+				</AppProviders>
 			</body>
 		</html>
 	);
