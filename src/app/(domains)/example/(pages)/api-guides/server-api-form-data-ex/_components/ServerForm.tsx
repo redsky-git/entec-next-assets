@@ -14,14 +14,14 @@ const ServerForm: IComponent<IServerFormProps> = async (): Promise<JSX.Element> 
 	return (
 		<>
 			<form action={submitForm as any}>
-				<input
+				{/*<input
 					type="text"
 					name="id"
 					placeholder="1"
 					readOnly
 					value="1"
 					required
-				/>
+				/>*/}
 				<input
 					type="text"
 					name="title"
@@ -30,13 +30,13 @@ const ServerForm: IComponent<IServerFormProps> = async (): Promise<JSX.Element> 
 				/>
 				<input
 					type="text"
-					name="content"
+					name="body"
 					placeholder="내용"
 					required
 				/>
 				<input
 					type="text"
-					name="UserId"
+					name="userId"
 					placeholder="1"
 					readOnly
 					value="1"

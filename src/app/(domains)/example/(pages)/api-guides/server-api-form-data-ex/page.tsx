@@ -2,8 +2,10 @@ import type { IComponent } from '@app-types/common';
 import type { JSX } from 'react';
 import { Separator } from '@components/shadcn/ui/separator';
 import RunCodeblock from '@domains/example/_components/example/RunCodeblock';
-import ServerApiForm from './_components/ServerApiForm';
+
+//import ServerApiForm from './_components/ServerApiForm';
 import ServerForm from './_components/ServerForm';
+import { cookies } from 'next/headers';
 
 interface IServerApiFormDataExProps {
 	test?: string;
@@ -14,6 +16,8 @@ interface IServerApiFormDataExProps {
  * serverApi를 사용하여 FormData를 전송하는 예제 페이지입니다.
  */
 const ServerApiFormDataExPage: IComponent<IServerApiFormDataExProps> = async (): Promise<JSX.Element> => {
+	const lastPostCookie = (await cookies()).get('lastPost');
+	const postData = lastPostCookie ? JSON.parse(lastPostCookie.value) : null;
 	return (
 		<>
 			<div className="flex min-w-0 flex-1 flex-col">
@@ -24,6 +28,7 @@ const ServerApiFormDataExPage: IComponent<IServerApiFormDataExProps> = async ():
 							<h1 className="scroll-m-20 text-4xl font-semibold tracking-tight sm:text-3xl xl:text-4xl">
 								serverApi (FormData 전송)
 							</h1>
+							<pre>{JSON.stringify(postData, null, 2)}</pre>
 							<div className="docs-nav bg-background/80 border-border/50 fixed inset-x-0 bottom-0 isolate z-50 flex items-center gap-2 border-t px-6 py-4 backdrop-blur-sm sm:static sm:z-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-1.5 sm:backdrop-blur-none">
 								&nbsp;
 							</div>
@@ -35,6 +40,20 @@ const ServerApiFormDataExPage: IComponent<IServerApiFormDataExProps> = async ():
 							serverApi는 Server Action으로 동작하므로 브라우저에서 직접 API를 호출하지 않고, Next.js 서버를 거쳐 API를
 							호출합니다.
 						</p>
+						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+							FormData는 Client Component에서 제출하여 사용할 수도있고, Server Component에서 제출하여 사용할 수도
+							있습니다.
+						</p>
+						<ul className="list-disc list-inside text-sm space-y-1">
+							<li>
+								<strong>순수 Server Component : </strong>리다이렉트 + 쿠키 방식으로 마지막 결과를 저장하고 표시할 수
+								있습니다.
+							</li>
+							<li>
+								<strong>Client Component 방식 : </strong>가장 실용적이고, 페이지 새로고침없고, 로딩 상태와 결과를 동시에
+								표시할 수 있습니다. 실제 프로젝트에서는 이 방식을 사용하는 것이 좋습니다.
+							</li>
+						</ul>
 					</div>
 					<div className="w-full flex-1 *:data-[slot=alert]:first:mt-0">
 						<Separator className="my-6" />
