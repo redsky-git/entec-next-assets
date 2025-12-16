@@ -133,6 +133,10 @@ export const NAV_DATA: any = [
 				url: '/example/api-guides/server-api-server-component-ex',
 			},
 			{
+				title: 'serverApi (FormData)',
+				url: '/example/api-guides/server-api-form-data-ex',
+			},
+			{
 				title: '◉ Test',
 				type: 'group',
 			},

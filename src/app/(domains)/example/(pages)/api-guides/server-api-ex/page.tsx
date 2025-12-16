@@ -77,11 +77,6 @@ const ServerApiEx: IComponent<IServerApiExProps> = (): JSX.Element => {
 	} = useApi<IUser[]>('@routes/example/api/users');
 	//==============================================================================
 
-	// api 호출(/photos) 버튼 클릭 handler
-	const handlerCallPhotosAPI = () => {
-		//refetchPhotos();
-	};
-
 	const handlerCallPostsByIdAPI = (id: number) => {
 		setId(id);
 		//setTimeout(() => {
@@ -234,13 +229,12 @@ const ServerApiEx: IComponent<IServerApiExProps> = (): JSX.Element => {
 							</p>
 							<div className="w-full flex-1 py-4">
 								<h3 className="text-2xl font-semibold tracking-tight sm:text-2xl xl:text-2xl">데이터 흐름</h3>
-								<p className="text-[1.05rem] text-balance sm:text-base">
-									<RunCodeblock
-										lineNumbers={false}
-										showCodeBlockCopyButton={false}
-										showCollapsed={false}
-										rounded={false}
-										codeTemplate={`
+								<RunCodeblock
+									lineNumbers={false}
+									showCodeBlockCopyButton={false}
+									showCollapsed={false}
+									rounded={false}
+									codeTemplate={`
 ┌─────────────────────────────────────────────────────────────┐
 │                     Client Component                        │
 │                                                             │
@@ -263,8 +257,7 @@ const ServerApiEx: IComponent<IServerApiExProps> = (): JSX.Element => {
 │              (https://external-api.com)                     │
 └─────────────────────────────────────────────────────────────┘
 `}
-									/>
-								</p>
+								/>
 							</div>
 							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
 								<code className="bg-muted relative rounded-md px-[0.3rem] py-[0.2rem] font-mono text-[1.1rem] wrap-break-word outline-none font-bold">
@@ -459,6 +452,7 @@ export async function GET(_request: NextRequest) {
 							</CardContent>
 						</Card>
 						{/* API 호출 결과 데이터를 이용하여 화면 그리기 예제 END */}
+						<Separator className="my-6" />
 						{/* example 블럭요서 START */}
 						<div className="flex flex-col gap-2 pt-6">
 							<div className="flex items-start justify-between">
@@ -483,6 +477,32 @@ export async function GET(_request: NextRequest) {
 							</div>
 						</div>
 						{/* example 블럭요서 END */}
+						<Separator className="my-6" />
+						{/* example 블럭요서 START */}
+						<div className="flex flex-col gap-2 pt-6">
+							<div className="flex items-start justify-between">
+								<h2
+									data-shorcut="true"
+									className="scroll-m-20 text-3xl font-semibold tracking-tight sm:text-3xl xl:text-3xl"
+								>
+									Server Component에서 FormData 전송하기
+								</h2>
+								<div className="docs-nav bg-background/80 border-border/50 fixed inset-x-0 bottom-0 isolate z-50 flex items-center gap-2 border-t px-6 py-4 backdrop-blur-sm sm:static sm:z-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-1.5 sm:backdrop-blur-none">
+									&nbsp;
+								</div>
+							</div>
+							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+								현재 보고있는 페이지는 <strong>Client Component</strong>이므로 <strong>Server Component</strong>화면으로
+								이동하여 FormData 전송 예제를 확인합니다.
+							</p>
+							<div className="flex justify-start pt-4">
+								<Button onClick={() => router.push('/example/api-guides/server-api-form-data-ex')}>
+									Server Component FormData 전송 예제 확인하기
+								</Button>
+							</div>
+						</div>
+						{/* example 블럭요서 END */}
+						<Separator className="my-6" />
 						{/* example 블럭요서 START */}
 						<div className="flex flex-col gap-2 pt-6">
 							<div className="flex items-start justify-between">

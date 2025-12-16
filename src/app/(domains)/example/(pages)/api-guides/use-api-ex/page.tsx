@@ -517,13 +517,12 @@ function SamplePage() {
 
 						<div className="w-full flex-1 py-4">
 							<h3 className="text-2xl font-semibold tracking-tight sm:text-2xl xl:text-2xl">데이터 흐름</h3>
-							<p className="text-[1.05rem] text-balance sm:text-base">
-								<RunCodeblock
-									lineNumbers={false}
-									showCodeBlockCopyButton={false}
-									showCollapsed={false}
-									rounded={false}
-									codeTemplate={`
+							<RunCodeblock
+								lineNumbers={false}
+								showCodeBlockCopyButton={false}
+								showCollapsed={false}
+								rounded={false}
+								codeTemplate={`
 ┌─────────────────────────────────────────────────────────────┐
 │                     Client Component                        │
 │                                                             │
@@ -546,8 +545,7 @@ function SamplePage() {
 │              (https://external-api.com)                     │
 └─────────────────────────────────────────────────────────────┘
 `}
-								/>
-							</p>
+							/>
 						</div>
 						<div className="w-full flex-1 py-4">
 							<RunCodeblock
