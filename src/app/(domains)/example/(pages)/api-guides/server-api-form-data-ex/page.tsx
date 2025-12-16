@@ -34,7 +34,7 @@ const ServerApiFormDataExPage: IComponent<IServerApiFormDataExProps> = async ():
 							</div>
 						</div>
 						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
-							이 페이지는 <strong>Client Component</strong>에서 <strong>serverApi</strong>를 통해{' '}
+							이 페이지는 <strong>Server Component</strong>에서 <strong>serverApi</strong>를 통해{' '}
 							<strong>FormData</strong>를 전송하는 예제입니다.
 							<br />
 							serverApi는 Server Action으로 동작하므로 브라우저에서 직접 API를 호출하지 않고, Next.js 서버를 거쳐 API를
@@ -74,7 +74,70 @@ const ServerApiFormDataExPage: IComponent<IServerApiFormDataExProps> = async ():
 							</p>
 
 							<div className="w-full flex-1 py-4">
-								<h3 className="text-2xl font-semibold tracking-tight sm:text-2xl xl:text-2xl mb-4">데이터 흐름</h3>
+								<h3 className="text-2xl font-semibold tracking-tight sm:text-2xl xl:text-2xl mb-4">
+									데이터 흐름(Server Component 방식)
+								</h3>
+								<RunCodeblock
+									lineNumbers={false}
+									showCodeBlockCopyButton={false}
+									showCollapsed={false}
+									rounded={false}
+									codeTemplate={`
+┌─────────────────────────────────────────────────────────────┐
+│         Server Component (렌더링: Next.js Server)           │
+│      (src/app/.../server-api-form-data-ex/page.tsx)         │
+│                                                             │
+│   HTML 생성 → <form action={submitForm}>                    │
+│                                                             │
+└─────────────────────┬───────────────────────────────────────┘
+                      │ (HTML 전달)
+                      ▼
+┌─────────────────────────────────────────────────────────────┐
+│                  Browser (Client)                           │
+│                                                             │
+│   <form> 렌더링 및 사용자 입력                               │
+│   <button type="submit"> 클릭                               │
+│                    │                                        │
+└────────────────────┼────────────────────────────────────────┘
+                     │ (FormData 직렬화 및 Server Action 호출)
+                     ▼
+┌─────────────────────────────────────────────────────────────┐
+│          Server Action (Next.js Server)                     │
+│         (actions.ts의 submitForm 함수)                      │
+│                                                             │
+│   export async function submitForm(formData: FormData) {    │
+│       // FormData 수신 및 처리                               │
+│       const res = await serverApi(url, {                    │
+│           method: 'POST',                                   │
+│           body: formData                                    │
+│       });                                                   │
+│   }                │                                        │
+└────────────────────┼────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────────────────────┐
+│          serverApi 함수 (Next.js Server)                    │
+│         (src/core/common/api/server-api.ts)                 │
+│                                                             │
+│   fetch('https://koreanjson.com/posts', {                   │
+│       method: 'POST',                                       │
+│       body: FormData  // multipart/form-data 자동 설정      │
+│   })                  │                                     │
+└───────────────────────┼─────────────────────────────────────┘
+                        │ (HTTP POST: multipart/form-data)
+                        ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    External API                             │
+│              (https://koreanjson.com/posts)                 │
+└─────────────────────────────────────────────────────────────┘
+`}
+								/>
+							</div>
+
+							<div className="w-full flex-1 py-4">
+								<h3 className="text-2xl font-semibold tracking-tight sm:text-2xl xl:text-2xl mb-4">
+									데이터 흐름(Client Component 방식)
+								</h3>
 								<RunCodeblock
 									lineNumbers={false}
 									showCodeBlockCopyButton={false}
