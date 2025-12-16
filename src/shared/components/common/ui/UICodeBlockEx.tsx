@@ -34,6 +34,9 @@ interface IUICodeBlockExProps {
 	}; // 코드 하이라이팅 테마 (기본값: vitesse-light/dark)
 	forceDarkTheme?: boolean; // 항상 다크 테마 배경 사용 (기본값: false)
 	className?: string;
+	lineNumbers?: boolean; // 코드 라인 번호 표시 여부 (기본값: false)
+	showCodeBlockCopyButton?: boolean;
+	showCollapsed?: boolean;
 }
 
 const UICodeBlockEx: IComponent<IUICodeBlockExProps> = ({
@@ -48,6 +51,9 @@ const UICodeBlockEx: IComponent<IUICodeBlockExProps> = ({
 	},
 	forceDarkTheme = false,
 	className = '',
+	lineNumbers = true,
+	showCodeBlockCopyButton = true,
+	showCollapsed = true,
 }): JSX.Element => {
 	const [codeData, setCodeData] = useState<TCode>([{ language, filename: '', code: '' }]);
 	const [isCollapsed, setIsCollapsed] = useState(false);
@@ -111,17 +117,21 @@ const UICodeBlockEx: IComponent<IUICodeBlockExProps> = ({
 					</CodeBlockHeader>
 				) : (
 					<div className="absolute top-2 right-2 z-10 flex items-center gap-2">
-						<button
-							onClick={() => setIsCollapsed(!isCollapsed)}
-							className="flex items-center justify-center w-8 h-8 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-							aria-label={isCollapsed ? '코드 펼치기' : '코드 접기'}
-						>
-							{isCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
-						</button>
-						<CodeBlockCopyButton
-							onCopy={() => console.log('Copied code to clipboard')}
-							onError={() => console.error('Failed to copy code to clipboard')}
-						/>
+						{showCollapsed && (
+							<button
+								onClick={() => setIsCollapsed(!isCollapsed)}
+								className="flex items-center justify-center w-8 h-8 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+								aria-label={isCollapsed ? '코드 펼치기' : '코드 접기'}
+							>
+								{isCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+							</button>
+						)}
+						{showCodeBlockCopyButton && (
+							<CodeBlockCopyButton
+								onCopy={() => console.log('Copied code to clipboard')}
+								onError={() => console.error('Failed to copy code to clipboard')}
+							/>
+						)}
 					</div>
 				)}
 				{!isCollapsed ? (
@@ -130,6 +140,7 @@ const UICodeBlockEx: IComponent<IUICodeBlockExProps> = ({
 							<CodeBlockItem
 								key={item.language}
 								value={item.language}
+								lineNumbers={lineNumbers}
 							>
 								<CodeBlockContent
 									language={item.language as BundledLanguage}

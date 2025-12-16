@@ -129,6 +129,10 @@ export const NAV_DATA: any = [
 				url: '/example/api-guides/server-api-ex',
 			},
 			{
+				title: 'serverApi (Server)',
+				url: '/example/api-guides/server-api-server-component-ex',
+			},
+			{
 				title: '◉ Test',
 				type: 'group',
 			},

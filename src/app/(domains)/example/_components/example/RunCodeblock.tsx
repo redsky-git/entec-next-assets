@@ -10,9 +10,21 @@ interface IRunCodeblockProps {
 	children?: any;
 	codeTemplate?: string;
 	title?: string;
+	lineNumbers?: boolean;
+	showCollapsed?: boolean;
+	showCodeBlockCopyButton?: boolean;
+	rounded?: boolean;
 }
 
-const RunCodeblock: IComponent<IRunCodeblockProps> = ({ children, codeTemplate = '', title = '' }): JSX.Element => {
+const RunCodeblock: IComponent<IRunCodeblockProps> = ({
+	children,
+	codeTemplate = '',
+	title = '',
+	lineNumbers = true,
+	showCodeBlockCopyButton = true,
+	showCollapsed = true,
+	rounded = true,
+}): JSX.Element => {
 	return (
 		<Tabs defaultValue="preview">
 			<TabsList
@@ -34,7 +46,10 @@ const RunCodeblock: IComponent<IRunCodeblockProps> = ({ children, codeTemplate =
 							showHeader={false}
 							language="tsx"
 							filename="SamplePage.tsx"
-							className="rounded-t-none rounded-b-md"
+							className={rounded ? 'rounded-t-none rounded-b-md' : 'rounded-none'}
+							lineNumbers={lineNumbers}
+							showCodeBlockCopyButton={showCodeBlockCopyButton}
+							showCollapsed={showCollapsed}
 						>
 							{codeTemplate || ''}
 						</UICodeBlockEx>

@@ -118,7 +118,7 @@ const ServerApiEx: IComponent<IServerApiExProps> = (): JSX.Element => {
 							</div>
 						</div>
 						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
-							<strong>serverApi</strong> 함수는 Server Component나 Server Action에서 사용되는 API 호출 함수입니다.
+							<strong>serverApi</strong> 함수는 <strong>Server Component</strong>나 <strong>Server Actions</strong>, <strong>Route Handler</strong>에서 사용되는 API 호출 함수입니다.
 						</p>
 						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
 							내부적으로 fetch 기반의 API 호출을 수행합니다.
@@ -180,7 +180,7 @@ const ServerApiEx: IComponent<IServerApiExProps> = (): JSX.Element => {
 													<span> &nbsp;SSR/SSG를 통한 초기 렌더링 최적화</span>
 												</div>
 												<div className="flex">
-													<span className="font-semibold">Server Action에서 데이터 처리 : </span>
+													<span className="font-semibold">Server Actions에서 데이터 처리 : </span>
 													<span> &nbsp;폼 제출, 데이터 변경 등 서버 액션</span>
 												</div>
 												<div className="flex">

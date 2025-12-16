@@ -518,7 +518,35 @@ function SamplePage() {
 						<div className="w-full flex-1 py-4">
 							<h3 className="text-2xl font-semibold tracking-tight sm:text-2xl xl:text-2xl">데이터 흐름</h3>
 							<p className="text-[1.05rem] text-balance sm:text-base">
-								Client Component (useApi) → Route Handler → serverApi → 외부 API
+								<RunCodeblock
+									lineNumbers={false}
+									showCodeBlockCopyButton={false}
+									showCollapsed={false}
+									rounded={false}
+									codeTemplate={`
+┌─────────────────────────────────────────────────────────────┐
+│                     Client Component                        │
+│                                                             │
+│   useApi('@routes/example/api/users')  ← TanStack Query     │
+│                    │                                        │
+└────────────────────┼────────────────────────────────────────┘
+                     │ (같은 도메인, CORS 없음)
+                     ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    Route Handler                            │
+│            (src/app/.../api/users/route.ts)                 │
+│                                                             │
+│   serverApi('https://external-api.com/users')               │
+│                    │                                        │
+└────────────────────┼────────────────────────────────────────┘
+                     │ (서버에서 호출, 보안/캐싱)
+                     ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    External API                             │
+│              (https://external-api.com)                     │
+└─────────────────────────────────────────────────────────────┘
+`}
+								/>
 							</p>
 						</div>
 						<div className="w-full flex-1 py-4">
