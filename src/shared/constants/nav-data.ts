@@ -184,6 +184,10 @@ export const NAV_DATA: any = [
 				title: '업무 공통 함수',
 				url: '/example/docs/common',
 			},
+			{
+				title: 'Server Form 예제',
+				url: '/example/docs/server-form',
+			},
 		],
 	},
 	{

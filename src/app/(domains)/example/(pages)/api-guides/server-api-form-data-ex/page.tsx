@@ -84,10 +84,10 @@ const ServerApiFormDataExPage: IComponent<IServerApiFormDataExProps> = async ():
 									rounded={false}
 									codeTemplate={`
 ┌─────────────────────────────────────────────────────────────┐
-│         Server Component (렌더링: Next.js Server)           │
+│         Server Component (렌더링: Next.js Server)             │
 │      (src/app/.../server-api-form-data-ex/page.tsx)         │
 │                                                             │
-│   HTML 생성 → <form action={submitForm}>                    │
+│   HTML 생성 → <form action={submitForm}>                     │
 │                                                             │
 └─────────────────────┬───────────────────────────────────────┘
                       │ (HTML 전달)
@@ -95,18 +95,18 @@ const ServerApiFormDataExPage: IComponent<IServerApiFormDataExProps> = async ():
 ┌─────────────────────────────────────────────────────────────┐
 │                  Browser (Client)                           │
 │                                                             │
-│   <form> 렌더링 및 사용자 입력                               │
-│   <button type="submit"> 클릭                               │
+│   <form> 렌더링 및 사용자 입력                                   │
+│   <button type="submit"> 클릭                                │
 │                    │                                        │
 └────────────────────┼────────────────────────────────────────┘
                      │ (FormData 직렬화 및 Server Action 호출)
                      ▼
 ┌─────────────────────────────────────────────────────────────┐
 │          Server Action (Next.js Server)                     │
-│         (actions.ts의 submitForm 함수)                      │
+│         (actions.ts의 submitForm 함수)                        │
 │                                                             │
 │   export async function submitForm(formData: FormData) {    │
-│       // FormData 수신 및 처리                               │
+│       // FormData 수신 및 처리                                 │
 │       const res = await serverApi(url, {                    │
 │           method: 'POST',                                   │
 │           body: formData                                    │
@@ -116,12 +116,12 @@ const ServerApiFormDataExPage: IComponent<IServerApiFormDataExProps> = async ():
                      │
                      ▼
 ┌─────────────────────────────────────────────────────────────┐
-│          serverApi 함수 (Next.js Server)                    │
+│          serverApi 함수 (Next.js Server)                     │
 │         (src/core/common/api/server-api.ts)                 │
 │                                                             │
 │   fetch('https://koreanjson.com/posts', {                   │
 │       method: 'POST',                                       │
-│       body: FormData  // multipart/form-data 자동 설정      │
+│       body: FormData  // multipart/form-data 자동 설정        │
 │   })                  │                                     │
 └───────────────────────┼─────────────────────────────────────┘
                         │ (HTTP POST: multipart/form-data)
