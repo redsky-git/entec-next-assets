@@ -13,7 +13,7 @@ const LayoutASide: IComponent<ILayoutASideProps> = () => {
 	const handlerOnThisPage = (id: string) => {
 		const element = document.querySelector(`[data-section="${id}"]`);
 		element?.scrollIntoView({
-			behavior: 'smooth',
+			behavior: 'auto', // 'smooth',
 			block: 'start',
 		});
 	};
@@ -38,10 +38,10 @@ const LayoutASide: IComponent<ILayoutASideProps> = () => {
 							key={heading.id}
 							onClick={() => handlerOnThisPage(heading.id)}
 							className={`
-                block text-sm transition-colors duration-200
-                ${heading.level === 2 ? 'pl-0' : 'pl-4'}
-                ${activeId === heading.id ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-gray-900'}
-              `}
+								block w-full text-left text-sm transition-colors duration-200
+								${heading.level === 2 ? 'pl-0' : 'pl-4'}
+								${activeId === heading.id ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-gray-900'}
+							`}
 						>
 							{heading.text}
 						</button>

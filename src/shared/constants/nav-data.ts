@@ -185,8 +185,16 @@ export const NAV_DATA: any = [
 				url: '/example/docs/common',
 			},
 			{
-				title: 'Form전송예제(Server)',
+				title: 'Form전송(Server)',
 				url: '/example/docs/server-form',
+			},
+			{
+				title: 'Form전송(Client+Action)',
+				url: '/example/docs/client-form',
+			},
+			{
+				title: 'Form전송(Client+RouterHandler)',
+				url: '/example/docs/client-form',
 			},
 		],
 	},

@@ -1,0 +1,166 @@
+<svg viewBox="0 0 800 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  
+  <!-- Step 1: User Form Input in Client Component -->
+  <g filter="url(#shadow)">
+    <rect x="100" y="30" width="600" height="140" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <circle cx="130" cy="60" r="20" fill="#3b82f6"/>
+    <text x="130" y="68" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">1</text>
+    <text x="170" y="67" font-family="Arial, sans-serif" font-size="20" font-weight="600" fill="#1e293b" text-anchor="start">
+      사용자 폼 입력 &amp; 제출
+    </text>
+    <text x="170" y="90" font-family="Arial, sans-serif" font-size="15" fill="#64748b" text-anchor="start">
+      Client Component (useState + onSubmit)
+    </text>
+    <text x="400" y="120" font-family="Consolas, monospace" font-size="14" fill="#475569" text-anchor="middle">
+      &lt;form onSubmit={handleSubmit}&gt; [ID] [제목] [내용] [제출] &lt;/form&gt;
+    </text>
+    <text x="400" y="145" font-family="Consolas, monospace" font-size="13" fill="#64748b" text-anchor="middle">
+      사용자가 폼 데이터 입력 후 submit 버튼 클릭
+    </text>
+  </g>
+  
+  <!-- Arrow 1 -->
+  <g>
+    <path d="M 400 170 L 400 205" stroke="#cbd5e1" stroke-width="3" fill="none"/>
+    <polygon points="400 215, 395 205, 405 205" fill="#cbd5e1"/>
+    <rect x="405" y="185" width="150" height="20" fill="white" opacity="0.9"/>
+    <text x="480" y="199" font-family="Arial, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">
+      onSubmit 이벤트 발생
+    </text>
+  </g>
+  
+  <!-- Step 2: handleSubmit -->
+  <g filter="url(#shadow)">
+    <rect x="100" y="220" width="600" height="140" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <circle cx="130" cy="250" r="20" fill="#8b5cf6"/>
+    <text x="130" y="258" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">2</text>
+    <text x="170" y="257" font-family="Arial, sans-serif" font-size="20" font-weight="600" fill="#1e293b" text-anchor="start">
+      handleSubmit 핸들러 실행
+    </text>
+    <text x="170" y="280" font-family="Consolas, monospace" font-size="14" fill="#64748b" text-anchor="start">
+       page.tsx (Client Component) - setLoading(true);
+    </text>
+    <text x="130" y="310" font-family="Consolas, monospace" font-size="14" fill="#475569" text-anchor="start">
+      • e.preventDefault() - 기본 폼 제출 방지
+    </text>
+    <text x="130" y="333" font-family="Consolas, monospace" font-size="14" fill="#475569" text-anchor="start">
+      • new FormData(e.currentTarget) - FormData 직접 생성
+    </text>
+  </g>
+  
+  <!-- Arrow 2 -->
+  <g>
+    <path d="M 400 360 L 400 395" stroke="#cbd5e1" stroke-width="3" fill="none"/>
+    <polygon points="400 405, 395 395, 405 395" fill="#cbd5e1"/>
+    <rect x="420" y="373" width="120" height="20" fill="white" opacity="0.9"/>
+    <text x="480" y="387" font-family="Arial, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">
+      FormData 전송
+    </text>
+  </g>
+  
+  <!-- Step 3: Server Action -->
+  <g filter="url(#shadow)">
+    <rect x="100" y="410" width="600" height="110" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <circle cx="130" cy="440" r="20" fill="#10b981"/>
+    <text x="130" y="448" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">3</text>
+    <text x="170" y="447" font-family="Arial, sans-serif" font-size="20" font-weight="600" fill="#1e293b" text-anchor="start">
+      Server Action
+    </text>
+    <text x="170" y="470" font-family="Consolas, monospace" font-size="14" fill="#64748b" text-anchor="start">
+      postsAction.ts
+    </text>
+    <text x="130" y="500" font-family="Arial, sans-serif" font-size="15" fill="#475569" text-anchor="start">
+      • FormData 파싱 (id, title, body) • serverApi() 호출
+    </text>
+  </g>
+  
+  <!-- Arrow 3 -->
+  <g>
+    <path d="M 400 520 L 400 555" stroke="#cbd5e1" stroke-width="3" fill="none"/>
+    <polygon points="400 565, 395 555, 405 555" fill="#cbd5e1"/>
+    <rect x="420" y="533" width="100" height="20" fill="white" opacity="0.9"/>
+    <text x="470" y="547" font-family="Arial, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">
+      HTTP POST
+    </text>
+  </g>
+  
+  <!-- Step 4: REST API -->
+  <g filter="url(#shadow)">
+    <rect x="100" y="570" width="600" height="100" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <circle cx="130" cy="600" r="20" fill="#f59e0b"/>
+    <text x="130" y="608" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">4</text>
+    <text x="170" y="607" font-family="Arial, sans-serif" font-size="20" font-weight="600" fill="#1e293b" text-anchor="start">
+      REST API 응답
+    </text>
+    <text x="170" y="630" font-family="Arial, sans-serif" font-size="14" fill="#64748b" text-anchor="start">
+      jsonplaceholder.typicode.com/posts
+    </text>
+    <text x="400" y="653" font-family="Consolas, monospace" font-size="15" fill="#475569" text-anchor="middle">
+      { id: 101, title: "...", body: "...", userId: 1 }
+    </text>
+  </g>
+  
+  <!-- Arrow 4 -->
+  <g>
+    <path d="M 400 670 L 400 705" stroke="#cbd5e1" stroke-width="3" fill="none"/>
+    <polygon points="400 715, 395 705, 405 705" fill="#cbd5e1"/>
+    <rect x="415" y="683" width="90" height="20" fill="white" opacity="0.9"/>
+    <text x="460" y="697" font-family="Arial, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">
+      응답 데이터
+    </text>
+  </g>
+  
+  <!-- Step 5: Return to Server Action -->
+  <g filter="url(#shadow)">
+    <rect x="100" y="720" width="600" height="110" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <circle cx="130" cy="750" r="20" fill="#ec4899"/>
+    <text x="130" y="758" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">5</text>
+    <text x="170" y="757" font-family="Arial, sans-serif" font-size="20" font-weight="600" fill="#1e293b" text-anchor="start">
+      Server Action 결과 반환
+    </text>
+    <text x="170" y="780" font-family="Consolas, monospace" font-size="14" fill="#64748b" text-anchor="start">
+      postsAction.ts
+    </text>
+    <text x="400" y="808" font-family="Consolas, monospace" font-size="14" fill="#475569" text-anchor="middle">
+      return { success: true, message: "...", data: {...} }
+    </text>
+  </g>
+  
+  <!-- Arrow 5 -->
+  <g>
+    <path d="M 400 830 L 400 875" stroke="#cbd5e1" stroke-width="3" fill="none"/>
+    <polygon points="400 885, 395 875, 405 875" fill="#cbd5e1"/>
+    <rect x="415" y="848" width="110" height="20" fill="white" opacity="0.9"/>
+    <text x="470" y="862" font-family="Arial, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">
+      결과 객체 반환
+    </text>
+  </g>
+  
+  <!-- Step 6: Client Component Update -->
+  <g filter="url(#shadow)">
+    <rect x="100" y="890" width="600" height="160" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <circle cx="130" cy="920" r="20" fill="#06b6d4"/>
+    <text x="130" y="928" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">6</text>
+    <text x="170" y="927" font-family="Arial, sans-serif" font-size="20" font-weight="600" fill="#1e293b" text-anchor="start">
+      Client Component 상태 업데이트
+    </text>
+    <text x="170" y="950" font-family="Arial, sans-serif" font-size="14" fill="#64748b" text-anchor="start">
+      Client Component - page.tsx
+    </text>
+    <text x="130" y="980" font-family="Consolas, monospace" font-size="14" fill="#475569" text-anchor="start">
+      • setResult(response) - 결과를 state에 저장
+    </text>
+    <text x="130" y="1005" font-family="Consolas, monospace" font-size="14" fill="#475569" text-anchor="start">
+      • setLoading(false) - 로딩 상태 종료
+    </text>
+    <text x="400" y="1033" font-family="Arial, sans-serif" font-size="15" fill="#64748b" text-anchor="middle">
+      → 화면 리렌더링 → 결과 화면 표시 (result state)
+    </text>
+  </g>
+</svg>
+
