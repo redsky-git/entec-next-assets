@@ -727,9 +727,8 @@ export function useServerAction<T = any>(action: (formData: FormData) => Promise
 
 		try {
 			// Server Action 직접 호출 (formData만 전달)
-			// Server Action 함수는 postsAction.ts 파일에 정의되어 있습니다.
-			// 상황에 따라 필요한 Server Action 함수를 사용합니다.
-			const result = await postsAction(formData);
+			// 넘겨받은 action함수를 사용합니다.
+			const result = await action(formData);
 			
 			if (result.success) {
 				setData(result.data);
@@ -1234,36 +1233,54 @@ export default function PostList({ initialPosts }) {
 										codeTemplate={`
 'use client';
 
-import { useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { postsAction } from './postsAction';
 
 export default function ClientFormPage() {
-  const [isPending, startTransition] = useTransition();
-  const [result, setResult] = useState(null);
+	const [isPending, startTransition] = useTransition();
+	const [result, setResult] = useState(null);
+	const [error, setError] = useState(null);
 
-  const handleSubmit = async (formData: FormData) => {
-    startTransition(async () => {
-      // ✅ transition 내에서 Server Action 실행
-      const response = await postsAction(formData);
-      setResult(response);
-    });
-  };
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		
+		const formData = new FormData(e.currentTarget);
+		
+		try {
+			// 비동기 작업 먼저 실행
+			const response = await postsAction(formData);
+			
+			// ✅ 상태 업데이트만 startTransition으로 감싸기
+			startTransition(() => {
+				if (response.success) {
+					setResult(response.data);
+				} else {
+					setError(response.message);
+				}
+			});
+		} catch (err) {
+			startTransition(() => {
+				setError('오류 발생');
+			});
+		}
+	};
 
-  return (
-    <div>
-      <form action={handleSubmit}>
-        <input name="title" placeholder="제목" />
-        <textarea name="body" placeholder="내용" />
-        
-        {/* isPending으로 로딩 상태 */}
-        <button type="submit" disabled={isPending}>
-          {isPending ? '전송 중...' : '제출'}
-        </button>
-      </form>
+	return (
+		<div>
+			<form onSubmit={handleSubmit}>
+				<input name="title" disabled={isPending} />
+				<textarea name="body" disabled={isPending} />
+				
+				{/* ✅ isPending으로 로딩 상태 표시 */}
+				<button type="submit" disabled={isPending}>
+					{isPending ? '전송 중...' : '제출'}
+				</button>
+			</form>
 
-      {result && <div>{JSON.stringify(result)}</div>}
-    </div>
-  );
+			{result && <div>성공: {JSON.stringify(result)}</div>}
+			{error && <div className="error">{error}</div>}
+		</div>
+	);
 }
 							`}
 									/>
