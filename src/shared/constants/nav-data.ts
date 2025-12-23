@@ -185,7 +185,7 @@ export const NAV_DATA: any = [
 				url: '/example/docs/common',
 			},
 			{
-				title: 'Server Form 예제',
+				title: 'Form전송예제(Server)',
 				url: '/example/docs/server-form',
 			},
 		],

@@ -11,6 +11,8 @@ import RunCodeblock from '@domains/example/_components/example/RunCodeblock';
 
 import { postsAction } from './postsAction';
 import { cookies } from 'next/headers';
+import Image from 'next/image';
+import serverFormDiagram from '@/assets/images/ex/serverForm01.svg';
 
 interface IServerFormExProps {
 	searchParams?: Promise<any>;
@@ -29,35 +31,46 @@ const ServerFormEx: IComponent<IServerFormExProps> = ({ searchParams }: IServerF
 					<div className="flex flex-col gap-2">
 						<div className="flex items-start justify-between">
 							<h1 className="scroll-m-20 text-4xl font-semibold tracking-tight sm:text-3xl xl:text-4xl">
-								FormData 전송 예제 (Server Component)
+								FormData 전송 (Server Component)
 							</h1>
 							<div className="docs-nav bg-background/80 border-border/50 fixed inset-x-0 bottom-0 isolate z-50 flex items-center gap-2 border-t px-6 py-4 backdrop-blur-sm sm:static sm:z-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-1.5 sm:backdrop-blur-none">
 								&nbsp;
 							</div>
 						</div>
 						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
-							<strong>Server Component</strong>에서 <strong>FormData</strong>를 전송하는 예제입니다.
+							현재 화면은 <strong>Server Component</strong>입니다. 모든 처리는 <strong>Server</strong>에서 처리됩니다.
 						</p>
 						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
-							현재 화면은 <strong>Server Component</strong>이며, 데이터를 입력하고 submit 버튼을 클릭하면 서버로{' '}
-							<strong>POST</strong> 요청이 전송되고, 서버에서는 <strong>FormData</strong>를 파싱하여 데이터를
-							처리합니다.
-						</p>
-						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
-							처리 결과는 <strong>revalidatePath</strong> 함수를 통해 화면을 새로고침합니다.
+							<strong>Server Component</strong>에서 <strong>FormData</strong>를 <strong>Server Action</strong>으로
+							전달하고, <strong>Server Action</strong>에서는 <strong>FormData</strong>를 파싱하여{' '}
+							<strong>REST API</strong>를 호출하는 과정의 예제입니다.
 						</p>
 					</div>
 					<div className="w-full flex-1 *:data-[slot=alert]:first:mt-0">
 						<div className="w-full flex-1 py-4">
-							<h3 className="text-2xl font-semibold tracking-tight sm:text-2xl xl:text-2xl">데이터 흐름</h3>
-							<RunCodeblock
+							<h2
+								data-shorcut="true"
+								className="scroll-m-20 text-3xl font-semibold tracking-tight sm:text-3xl xl:text-3xl"
+							>
+								폼 제출 처리 흐름
+							</h2>
+
+							<div className="flex justify-center py-1">
+								<Image
+									src={serverFormDiagram}
+									alt="Server Form Diagram"
+									width={700}
+									height={400}
+								/>
+							</div>
+							{/*<RunCodeblock
 								lineNumbers={false}
 								showCodeBlockCopyButton={false}
 								showCollapsed={false}
 								rounded={false}
 								codeTemplate={`
 ┌─────────────────────────────────────────────────┐
-│          1.  사용자 폼 입력 & 제출                   │
+│   1.  사용자 폼 입력 & 제출 (Server Component)      │
 │                                                 │
 │    <form action={postsAction}>                  │
 │      [ID] [제목] [내용] [제출 버튼]                  │
@@ -69,12 +82,12 @@ const ServerFormEx: IComponent<IServerFormExProps> = ({ searchParams }: IServerF
 │    2.  Server Action (postsAction.ts)           │
 │                                                 │
 │  • FormData 파싱 (id, title, body)               │
-│  • serverApi → External API 호출                 │
+│  • serverApi() → REST API 호출                   │
 └────────────────────┬────────────────────────────┘
                      │
                      ▼
 ┌─────────────────────────────────────────────────┐
-│    3.  External API 응답                         │
+│    3.  REST API 응답 (API 서버)                   │
 │                                                 │
 │  { id: 101, title: "...", body: "..." }         │
 └────────────────────┬────────────────────────────┘
@@ -83,31 +96,33 @@ const ServerFormEx: IComponent<IServerFormExProps> = ({ searchParams }: IServerF
 ┌─────────────────────────────────────────────────┐
 │    4.  결과 저장 & Redirect                       │
 │                                                 │
-│  • 쿠키 저장: 전체 응답 데이터                        │
-│  • redirect: ?success=true&message=...&id=101   │
+│  • 쿠키 저장: 전체 응답 데이터 또는,                    │
+│     query parameter를 통해 전달                    │
+│    (redirect: ?success=true&message=...&id=101) │
 └────────────────────┬────────────────────────────┘
                      │
                      ▼
 ┌─────────────────────────────────────────────────┐
-│    5.  페이지 재렌더링 (page.tsx)                   │
+│    5.  서버에서 리렌더링 & 브라우저로 전달              │
+│        (Server Component - page.tsx)            │
 │                                                 │
 │  • use(cookies()).get('result_posts')           │
 │  • use(searchParams) → { success, message }     │
 │                                                 │
-│  → 결과 화면 표시                                  │
+│  → 렌더링된 HTML을 브라우저로 전달 → 결과 화면 표시       │
 └─────────────────────────────────────────────────┘
 							`}
-							/>
+							/>*/}
 						</div>
 						<Separator className="my-6" />
-						{/* example 블럭요서 START */}
+						{/* example 블럭요소 START */}
 						<div className="flex flex-col gap-2 pt-6">
 							<div className="flex items-start justify-between">
 								<h2
 									data-shorcut="true"
 									className="scroll-m-20 text-3xl font-semibold tracking-tight sm:text-3xl xl:text-3xl"
 								>
-									/posts (POST) 요청 보내기(좀더 확인 필요한 코드)
+									Form 전송 예제
 								</h2>
 
 								<div className="docs-nav bg-background/80 border-border/50 fixed inset-x-0 bottom-0 isolate z-50 flex items-center gap-2 border-t px-6 py-4 backdrop-blur-sm sm:static sm:z-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-1.5 sm:backdrop-blur-none">
@@ -115,9 +130,15 @@ const ServerFormEx: IComponent<IServerFormExProps> = ({ searchParams }: IServerF
 								</div>
 							</div>
 							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
-								<strong>Server Component</strong>의 <strong>form</strong>에서 <strong>Server Action</strong>으로
-								<strong>FormData</strong>를 전달하고 <strong>Server Action</strong>에서는 <strong>FormData</strong>를
-								파싱하여 <strong>serverApi</strong>를 통해 <strong>External API</strong>를 호출합니다.
+								Form 제출 처리 실제 구현 예제입니다.
+							</p>
+							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+								<strong>'https://jsonplaceholder.typicode.com/posts'</strong> 주소로 POST 요청을 보내고 결과를 받습니다.
+							</p>
+							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+								REST API 응답 결과값은 <strong>쿠키</strong>에 저장하거나, <strong>query parameter</strong>를 통해
+								전달하여 <strong>redirect</strong> 함수를 통해 페이지 이동하여 결과를 표시합니다. 프로젝트 상황에 따라
+								적절한 방법을 선택하면 됩니다.
 							</p>
 							<div className="docs-nav bg-background/80 border-border/50 fixed inset-x-0 bottom-0 isolate z-50 flex items-center gap-2 border-t px-6 py-4 backdrop-blur-sm sm:static sm:z-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-1.5 sm:backdrop-blur-none">
 								&nbsp;
@@ -151,7 +172,7 @@ function SamplePage({ searchParams }) {
 }
 	
 // ========================================================
-// postsAction.ts
+// postsAction.ts (Server Action)
 // ========================================================
 'use server';
 
@@ -177,7 +198,8 @@ export async function postsAction(formData: FormData) {
 		// 쿠키에 결과 저장하여 전달 방법 (결과 화면에서 쿠키에서 읽어옴)
 		(await cookies()).set('result_posts', JSON.stringify(res), { maxAge: 60 });
 
-		// 원하는 페이지로 리다이렉트 (query parameter 포함) (결과 화면에서 쿼리 파라미터를 읽어옴)
+		// query parameter 포함을 위한 URLSearchParams 객체 생성 
+		// (결과 화면에서 쿼리 파라미터를 읽어옴)
 		const params = new URLSearchParams({
 			success: 'true',
 			message: '게시글이 작성되었습니다.',
@@ -258,10 +280,13 @@ export async function postsAction(formData: FormData) {
 											POST 요청 보내기
 										</button>
 									</form>
+									<div className="mt-4 text-xs text-neutral-500 dark:text-neutral-400 text-center">
+										폼 제출 시 서버로 FormData(id, title, body)를 전송합니다.
+									</div>
 									<div className="mt-4">
 										<div className="flex flex-col md:flex-row gap-4">
 											<div className="flex-1 p-4 border rounded-lg bg-neutral-50 dark:bg-neutral-900">
-												<div className="font-semibold mb-1 text-sm text-sky-700 dark:text-sky-300 flex items-center gap-1">
+												<div className="font-semibold mb-1 text-sm text-sky-700 dark:text-sky-300 flex flex-col items-start gap-0.5">
 													<span>resultPostsCookie</span>
 													<span className="text-xs text-neutral-500">(쿠키에서 읽은 결과)</span>
 												</div>
@@ -280,9 +305,9 @@ export async function postsAction(formData: FormData) {
 												</pre>
 											</div>
 											<div className="flex-1 p-4 border rounded-lg bg-neutral-50 dark:bg-neutral-900">
-												<div className="font-semibold mb-1 text-sm text-sky-700 dark:text-sky-300 flex items-center gap-1">
+												<div className="font-semibold mb-1 text-sm text-sky-700 dark:text-sky-300 flex flex-col items-start gap-0.5">
 													<span>searchParams</span>
-													<span className="text-xs text-neutral-500">(쿼리 파라미터)</span>
+													<span className="text-xs text-neutral-500">(쿼리 파라미터 읽은 결과)</span>
 												</div>
 												<pre className="whitespace-pre-wrap text-sm text-neutral-800 dark:text-neutral-100 bg-neutral-100 dark:bg-neutral-800 rounded-md p-2 border border-neutral-200 dark:border-neutral-700 overflow-x-auto">
 													{resolvedSearchParams && Object.keys(resolvedSearchParams).length > 0 ? (
@@ -293,9 +318,6 @@ export async function postsAction(formData: FormData) {
 												</pre>
 											</div>
 										</div>
-									</div>
-									<div className="mt-4 text-xs text-neutral-500 dark:text-neutral-400 text-center">
-										폼 제출 시 서버로 FormData(id, title, body)를 전송합니다.
 									</div>
 								</div>
 							</RunCodeblock>
@@ -365,8 +387,8 @@ function SamplePage() {
 								</TabsContent>
 							</Tabs>
 						</div>
-						{/* example 블럭요서 END */}
-						{/* example 블럭요서 START */}
+						{/* example 블럭요소 END */}
+						{/* example 블럭요소 START */}
 						<div className="flex flex-col gap-2 pt-6">
 							<div className="flex items-start justify-between">
 								<h3
