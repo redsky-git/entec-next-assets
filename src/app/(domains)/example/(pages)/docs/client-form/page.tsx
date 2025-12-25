@@ -697,7 +697,7 @@ export async function postsAction(formData: FormData) {
 							</div>
 							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
 								비슷한 Form 제출 처리 로직이 여러 컴포넌트에서 반복된다면, <strong>커스텀 훅</strong>으로 만들어
-								재사용할 수 있습니다. 아래는 이를 구현한 예제 코드입니다.
+								재사용할 수 있습니다. 아래는 이를 구현한 커스텀 훅 예제 코드입니다.
 							</p>
 							<div className="w-full flex-1 py-4">
 								<h4 className="scroll-m-20 text-xl font-semibold tracking-tight sm:text-xl xl:text-xl">
