@@ -15,7 +15,7 @@ export const PostFormSchema = z.object({
 		.max(1000, { message: '내용은 1000자를 초과할 수 없습니다.' }),
 	email: z.string().email({ message: '올바른 이메일 형식이 아닙니다.' }).optional().or(z.literal('')),
 	category: z.enum(['general', 'tech', 'news'], {
-		required_error: '카테고리를 선택해주세요.',
+		message: '카테고리를 선택해주세요.',
 	}),
 	agree: z.boolean().refine((val) => val === true, {
 		message: '약관에 동의해주세요.',
