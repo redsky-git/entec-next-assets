@@ -73,7 +73,10 @@ export default function PostForm() {
 	return (
 		<div className="w-full max-w-2xl mx-auto">
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+				<form
+					onSubmit={form.handleSubmit(onSubmit)}
+					className="space-y-6"
+				>
 					{/* 제목 필드 */}
 					<FormField
 						control={form.control}
@@ -84,7 +87,11 @@ export default function PostForm() {
 									제목 <span className="text-red-600">*</span>
 								</FormLabel>
 								<FormControl>
-									<Input placeholder="게시글 제목을 입력하세요" {...field} disabled={isPending} />
+									<Input
+										placeholder="게시글 제목을 입력하세요"
+										{...field}
+										disabled={isPending}
+									/>
 								</FormControl>
 								<FormDescription>2자 이상, 100자 이하로 입력해주세요.</FormDescription>
 								<FormMessage />
@@ -145,7 +152,11 @@ export default function PostForm() {
 								<FormLabel>
 									카테고리 <span className="text-red-600">*</span>
 								</FormLabel>
-								<Select onValueChange={field.onChange} defaultValue={field.value} disabled={isPending}>
+								<Select
+									onValueChange={field.onChange}
+									defaultValue={field.value}
+									disabled={isPending}
+								>
 									<FormControl>
 										<SelectTrigger>
 											<SelectValue placeholder="카테고리를 선택하세요" />
@@ -170,7 +181,11 @@ export default function PostForm() {
 						render={({ field }) => (
 							<FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
 								<FormControl>
-									<Checkbox checked={field.value} onCheckedChange={field.onChange} disabled={isPending} />
+									<Checkbox
+										checked={field.value}
+										onCheckedChange={field.onChange}
+										disabled={isPending}
+									/>
 								</FormControl>
 								<div className="space-y-1 leading-none">
 									<FormLabel>
@@ -184,7 +199,11 @@ export default function PostForm() {
 					/>
 
 					{/* 제출 버튼 */}
-					<Button type="submit" className="w-full" disabled={isPending}>
+					<Button
+						type="submit"
+						className="w-full"
+						disabled={isPending}
+					>
 						{isPending ? (
 							<>
 								<span className="mr-2">⏳</span>
@@ -202,7 +221,10 @@ export default function PostForm() {
 				<div className="mt-6">
 					{state.success ? (
 						<Alert className="border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950">
-							<Icon name="CheckCircle" className="text-green-600 dark:text-green-400" />
+							<Icon
+								name="CheckCircle"
+								className="text-green-600 dark:text-green-400"
+							/>
 							<AlertTitle className="text-green-900 dark:text-green-100">성공!</AlertTitle>
 							<AlertDescription className="text-green-800 dark:text-green-200">
 								<p className="mb-2">{state.message}</p>
@@ -213,7 +235,10 @@ export default function PostForm() {
 						</Alert>
 					) : (
 						<Alert className="border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-950">
-							<Icon name="AlertCircle" className="text-red-600 dark:text-red-400" />
+							<Icon
+								name="AlertCircle"
+								className="text-red-600 dark:text-red-400"
+							/>
 							<AlertTitle className="text-red-900 dark:text-red-100">오류 발생</AlertTitle>
 							<AlertDescription className="text-red-800 dark:text-red-200">{state.message}</AlertDescription>
 						</Alert>
@@ -223,4 +248,3 @@ export default function PostForm() {
 		</div>
 	);
 }
-

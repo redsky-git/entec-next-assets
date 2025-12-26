@@ -26,4 +26,3 @@ export const PostFormSchema = z.object({
  * TypeScript 타입 추출
  */
 export type PostFormData = z.infer<typeof PostFormSchema>;
-
