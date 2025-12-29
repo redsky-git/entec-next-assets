@@ -83,7 +83,7 @@ export async function callApi<T = any>(
 		// 토큰이 필요한 경우 로직
 		const token = null;
 		// 예: token = localStorage.getItem('access_token');
-
+		console.log('[callApi] reqConfig:::', reqConfig);
 		const response = await BaseFetchClient.request<T>(reqConfig, token);
 		return {
 			data: response.data as T,
