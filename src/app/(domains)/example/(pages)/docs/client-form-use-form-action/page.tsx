@@ -38,7 +38,7 @@ const ClientFormHookEx: IComponent<IClientFormHookExProps> = (): JSX.Element => 
 					<div className="flex flex-col gap-2">
 						<div className="flex items-start justify-between">
 							<h1 className="scroll-m-20 text-4xl font-semibold tracking-tight sm:text-3xl xl:text-4xl">
-								FormData 전송 (Client Component + useFormAction hook)
+								FormData 전송 (useFormAction 훅 사용)
 							</h1>
 							<div className="docs-nav bg-background/80 border-border/50 fixed inset-x-0 bottom-0 isolate z-50 flex items-center gap-2 border-t px-6 py-4 backdrop-blur-sm sm:static sm:z-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-1.5 sm:backdrop-blur-none">
 								&nbsp;
@@ -61,7 +61,7 @@ const ClientFormHookEx: IComponent<IClientFormHookExProps> = (): JSX.Element => 
 									data-shorcut="true"
 									className="scroll-m-20 text-3xl font-semibold tracking-tight sm:text-3xl xl:text-3xl"
 								>
-									Form예제(useFormAction hook 사용)
+									Form 제출 예제
 								</h2>
 								<div className="docs-nav bg-background/80 border-border/50 fixed inset-x-0 bottom-0 isolate z-50 flex items-center gap-2 border-t px-6 py-4 backdrop-blur-sm sm:static sm:z-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-1.5 sm:backdrop-blur-none">
 									&nbsp;
