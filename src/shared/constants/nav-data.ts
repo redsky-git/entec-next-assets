@@ -193,6 +193,10 @@ export const NAV_DATA: any = [
 				url: '/example/docs/client-form',
 			},
 			{
+				title: 'Form전송(useFormAction)',
+				url: '/example/docs/client-form-use-form-action',
+			},
+			{
 				title: 'Form전송(Client+RouterHandler)',
 				url: '/example/docs/client-form',
 			},

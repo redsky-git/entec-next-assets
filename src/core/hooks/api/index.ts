@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { useQuery, UseQueryResult, useMutation } from '@tanstack/react-query';
 import type { IUseApiOptions, IUseApiMutationOptions } from '@app-types/hooks';
+import type { ApiResponse } from '@app-types/common';
 import { createQueryKey } from '@fetch/query-key-factory';
 import { callApi } from '@fetch/api';
 
@@ -108,4 +110,65 @@ function useApiMutation<TData = unknown, TVariables = unknown>(
 	});
 }
 
-export { useApi, useApiMutation };
+/**
+ * Form 제출을 통해 Server Action을 호출하는 범용 훅. (Client Component에서 사용)
+ *
+ * @param action - Server Action 함수
+ * @returns {Object} - 훅 반환 객체
+ * @returns {boolean} loading - 로딩 상태
+ * @returns {T | null} data - 데이터
+ * @returns {string | null} error - 에러 메시지
+ * @returns {Function} submitAction - Form 제출 함수
+ * @returns {Function} reset - 초기화 함수
+ * @example
+ * const { loading, data, error, submitAction, reset } = useFormAction(action);
+ * // Form 제출
+ * submitAction(formData);
+ * // 초기화
+ * reset();
+ */
+function useFormAction<T>(action: (formData: FormData) => Promise<ApiResponse<T>>) {
+	const [loading, setLoading] = useState(false);
+	const [data, setData] = useState<T | null>(null);
+	const [error, setError] = useState<string | null>(null);
+
+	const submitAction = async (formData: FormData) => {
+		setLoading(true);
+		setError(null);
+		try {
+			// Server Action 직접 호출 (formData만 전달)
+			// 넘겨받은 action함수를 실행하고 결과를 반환합니다.
+			const result = await action(formData);
+			console.log('result:::', result);
+			if (result.success) {
+				setData(result.data as T);
+				return result;
+			} else {
+				setError(result.message as string);
+				return result;
+			}
+		} catch (err) {
+			const errorMessage =
+				err instanceof Error ? err.message : '[useFormAction]: Server Action 실행 중 오류가 발생했습니다.';
+			setError(errorMessage);
+			throw err;
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const reset = () => {
+		setData(null);
+		setError(null);
+		setLoading(false);
+	};
+	return {
+		loading,
+		data,
+		error,
+		submitAction,
+		reset,
+	};
+}
+
+export { useApi, useApiMutation, useFormAction };
