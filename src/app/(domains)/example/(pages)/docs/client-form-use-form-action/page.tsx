@@ -49,7 +49,7 @@ const ClientFormHookEx: IComponent<IClientFormHookExProps> = (): JSX.Element => 
 						</p>
 						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
 							<strong>Client Component</strong>에서 <strong>FormData</strong> 제출을 위한 방법으로{' '}
-							<strong>useFormAction hook</strong>을 사용한 예제입니다.
+							<strong>useFormAction</strong>을 사용한 예제입니다.
 						</p>
 					</div>
 					<div className="w-full flex-1 *:data-[slot=alert]:first:mt-0">
@@ -68,7 +68,8 @@ const ClientFormHookEx: IComponent<IClientFormHookExProps> = (): JSX.Element => 
 								</div>
 							</div>
 							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
-								Client Component에서 Form 제출을 위한 방법으로 <strong>useFormAction hook</strong>을 사용한 예제입니다.
+								<strong>Client Component</strong>에서 <strong>FormData</strong> 제출을 위한 방법으로{' '}
+								<strong>useFormAction 훅</strong>을 사용하면 코드가 훨씬 간결해지고, 로딩, 에러 처리 또한 편리해집니다.
 							</p>
 							<div className="w-full flex-1 py-4">
 								<h4 className="scroll-m-20 text-xl font-semibold tracking-tight sm:text-xl xl:text-xl">
@@ -89,7 +90,6 @@ const ClientFormHookEx: IComponent<IClientFormHookExProps> = (): JSX.Element => 
 
 								<div className="flex justify-center py-1">
 									<RunCodeblock
-										title="'https://jsonplaceholder.typicode.com/posts' 호출"
 										codeTemplate={`// ========================================================
 // SamplePage.tsx
 // ========================================================
@@ -102,7 +102,6 @@ import { useFormAction } from '@hooks/api';
 function SamplePage({ searchParams }) {
 	const { loading, data, error, submitAction, reset } = useFormAction(postsAction);
 
-	// form 제출 (useFormAction hook 사용) START ================================================
 	// form의 onSubmit 이벤트 처리 핸들러
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault(); // 기본 폼 제출 방지
