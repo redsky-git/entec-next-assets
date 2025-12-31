@@ -201,7 +201,7 @@ export const NAV_DATA: any = [
 				url: '/example/docs/client-form-route-handler',
 			},
 			{
-				title: 'React Hook Form + Zod',
+				title: 'Form전송(react-hook-form + Zod)',
 				url: '/example/docs/react-hook-form',
 			},
 		],
