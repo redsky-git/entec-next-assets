@@ -46,6 +46,10 @@ const ServerFormEx: IComponent<IServerFormExProps> = ({ searchParams }: IServerF
 							전달하고, <strong>Server Action</strong>에서는 <strong>FormData</strong>를 파싱하여{' '}
 							<strong>REST API</strong>를 호출하는 과정의 예제입니다.
 						</p>
+						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+							이와같이 <strong>Server Component</strong>에서 <strong>FormData</strong>를 <strong>Server Action</strong>
+							으로 전달하는 방법은 기본적인 필수값 체크 처리하는 <strong>심플한 폼 전송</strong>일 때 사용합니다.
+						</p>
 					</div>
 					<div className="w-full flex-1 *:data-[slot=alert]:first:mt-0">
 						<div className="w-full flex-1 py-4">

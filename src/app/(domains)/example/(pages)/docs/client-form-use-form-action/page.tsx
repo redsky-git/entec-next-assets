@@ -51,6 +51,10 @@ const ClientFormHookEx: IComponent<IClientFormHookExProps> = (): JSX.Element => 
 							<strong>Client Component</strong>에서 <strong>FormData</strong> 제출을 위한 방법으로{' '}
 							<strong>useFormAction</strong>을 사용한 예제입니다.
 						</p>
+						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+							<strong>useFormAction</strong>훅은 프로젝트에서 자체적으로 제공하는 커스텀 훅 입니다. 폼 제출 처리 로직을
+							간결하게 구현할 수 있습니다.
+						</p>
 					</div>
 					<div className="w-full flex-1 *:data-[slot=alert]:first:mt-0">
 						<Separator className="my-6" />

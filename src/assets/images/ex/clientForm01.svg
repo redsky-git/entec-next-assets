@@ -20,7 +20,7 @@
       &lt;form action={handleFormAction}&gt; [ID] [제목] [내용] [제출] &lt;/form&gt;
     </text>
     <text x="400" y="145" font-family="Consolas, monospace" font-size="13" fill="#64748b" text-anchor="middle">
-      setLoading(true) → postsAction(formData)
+      setLoading(true) - 로딩 상태 시작 → postsAction(formData)
     </text>
   </g>
   

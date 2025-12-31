@@ -171,7 +171,7 @@ const ClientFormEx: IComponent<IClientFormExProps> = (): JSX.Element => {
 								구현한 예제입니다.
 							</p>
 							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
-								코드가 간결하지만 복잡한 폼 유효성 검사, 로딩상태 등을 처리할 때는 적합하지 않습니다.
+								코드가 간결하지만 복잡한 폼 유효성 검사, 로딩상태 자동 처리 등을 해야할 때는 적합하지 않습니다.
 							</p>
 							<div className="w-full flex-1 py-4">
 								<h4 className="scroll-m-20 text-xl font-semibold tracking-tight sm:text-xl xl:text-xl">
@@ -253,7 +253,7 @@ function SamplePage({ searchParams }) {
 
 	// form action에 전달할 wrapper 함수
 	const handleFormAction = async (formData: FormData) => {
-		setLoading(true);
+		setLoading(true); // 로딩상태 시작
 
 		try {
 			const response = await postsAction(formData);
@@ -451,8 +451,30 @@ export async function postsAction(formData: FormData) {
 							</p>
 							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
 								<strong>useActionState, useFormStatus</strong>와 같이 React, Next.js에서 제공하는 훅을 사용하지 않으면
-								로딩상태 및 폼 유효성 검사 등을 직접 구현해야 합니다.
+								로딩상태 및 폼 유효성 검사 등을 직접 구현해야 하는 수고로움이 있습니다.
 							</p>
+							<Alert className="border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950">
+								<Icon
+									name="MessageCircleWarning"
+									className="text-blue-600 dark:text-blue-400"
+								/>
+								<AlertTitle className="text-blue-900 dark:text-blue-100">action, onSubmit 속성 사용의 차이</AlertTitle>
+								<AlertDescription className="text-blue-800 dark:text-blue-200">
+									<div className="flex flex-col gap-2">
+										{/*<p className="text-sm">...</p>*/}
+										<ul className="list-disc list-inside text-sm space-y-1">
+											<li>
+												<strong>action 속성 사용 : </strong>JavaScript 비활성화 시에도 동작(Progressive Enhancement),
+												브라우저 기본동작 활용.
+											</li>
+											<li>
+												<strong>onSubmit 이벤트 사용 : </strong>JavaScript 필수, 브라우저 기본동작 무시. 제출 전/후
+												Client 로직 실행 가능.
+											</li>
+										</ul>
+									</div>
+								</AlertDescription>
+							</Alert>
 							<div className="w-full flex-1 py-4">
 								<h4 className="scroll-m-20 text-xl font-semibold tracking-tight sm:text-xl xl:text-xl">
 									폼 제출 처리 흐름
@@ -698,6 +720,9 @@ export async function postsAction(formData: FormData) {
 							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
 								비슷한 Form 제출 처리 로직이 여러 컴포넌트에서 반복된다면, <strong>커스텀 훅</strong>으로 만들어
 								재사용할 수 있습니다. 아래는 이를 구현한 커스텀 훅 예제 코드입니다.
+							</p>
+							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+								다음 커스텀 훅 예제는 예시 코드이며, 프로젝트 상황에 맞게 수정하여 사용하시면 됩니다.
 							</p>
 							<div className="w-full flex-1 py-4">
 								<h4 className="scroll-m-20 text-xl font-semibold tracking-tight sm:text-xl xl:text-xl">
@@ -1005,67 +1030,62 @@ export async function postsAction(prevState: any, formData: FormData) {
 											<li>
 												<strong>useFormStatus : </strong>"지금 Form이 제출 중인지 확인" (로딩 상태)
 											</li>
+											<li>
+												<strong>핵심 차이점 비교 : </strong>
+												<div className="flex flex-col gap-2">
+													<table className="w-full">
+														<thead>
+															<tr>
+																<th className="border border-gray-300 px-4 py-2">구분</th>
+																<th className="border border-gray-300 px-4 py-2">useFormState</th>
+																<th className="border border-gray-300 px-4 py-2">useFormStatus</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td className="border border-gray-300 px-4 py-2">사용 위치</td>
+																<td className="border border-gray-300 px-4 py-2">Form 컴포넌트 자체</td>
+																<td className="border border-gray-300 px-4 py-2">Form의 자식 컴포넌트만</td>
+															</tr>
+														</tbody>
+														<tbody>
+															<tr>
+																<td className="border border-gray-300 px-4 py-2">주요 목적</td>
+																<td className="border border-gray-300 px-4 py-2">Server Action 결과 관리</td>
+																<td className="border border-gray-300 px-4 py-2">제출 중 상태 확인</td>
+															</tr>
+														</tbody>
+														<tbody>
+															<tr>
+																<td className="border border-gray-300 px-4 py-2">반환값</td>
+																<td className="border border-gray-300 px-4 py-2">[state, formAction]</td>
+																<td className="border border-gray-300 px-4 py-2">
+																	&#123; pending, data, method, action &#125;
+																</td>
+															</tr>
+														</tbody>
+														<tbody>
+															<tr>
+																<td className="border border-gray-300 px-4 py-2">데이터</td>
+																<td className="border border-gray-300 px-4 py-2">Server Action의 return 값</td>
+																<td className="border border-gray-300 px-4 py-2">제출 중인 FormData</td>
+															</tr>
+														</tbody>
+														<tbody>
+															<tr>
+																<td className="border border-gray-300 px-4 py-2">사용 시점</td>
+																<td className="border border-gray-300 px-4 py-2">에러</td>
+																<td className="border border-gray-300 px-4 py-2">에러</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</li>
 										</ul>
 									</div>
 								</AlertDescription>
 							</Alert>
-							<Alert className="border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950">
-								<Icon
-									name="MessageCircleWarning"
-									className="text-blue-600 dark:text-blue-400"
-								/>
-								<AlertTitle className="text-blue-900 dark:text-blue-100">핵심 차이점 비교</AlertTitle>
-								<AlertDescription className="text-blue-800 dark:text-blue-200">
-									<div className="flex flex-col gap-2">
-										<table className="w-full">
-											<thead>
-												<tr>
-													<th className="border border-gray-300 px-4 py-2">구분</th>
-													<th className="border border-gray-300 px-4 py-2">useFormState</th>
-													<th className="border border-gray-300 px-4 py-2">useFormStatus</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td className="border border-gray-300 px-4 py-2">사용 위치</td>
-													<td className="border border-gray-300 px-4 py-2">Form 컴포넌트 자체</td>
-													<td className="border border-gray-300 px-4 py-2">Form의 자식 컴포넌트만</td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td className="border border-gray-300 px-4 py-2">주요 목적</td>
-													<td className="border border-gray-300 px-4 py-2">Server Action 결과 관리</td>
-													<td className="border border-gray-300 px-4 py-2">제출 중 상태 확인</td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td className="border border-gray-300 px-4 py-2">반환값</td>
-													<td className="border border-gray-300 px-4 py-2">[state, formAction]</td>
-													<td className="border border-gray-300 px-4 py-2">
-														&#123; pending, data, method, action &#125;
-													</td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td className="border border-gray-300 px-4 py-2">데이터</td>
-													<td className="border border-gray-300 px-4 py-2">Server Action의 return 값</td>
-													<td className="border border-gray-300 px-4 py-2">제출 중인 FormData</td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td className="border border-gray-300 px-4 py-2">사용 시점</td>
-													<td className="border border-gray-300 px-4 py-2">에러</td>
-													<td className="border border-gray-300 px-4 py-2">에러</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</AlertDescription>
-							</Alert>
+
 							<div className="w-full flex-1 py-4">
 								<h4 className="scroll-m-20 text-xl font-semibold tracking-tight sm:text-xl xl:text-xl">
 									useActionState + useFormStatus 예제 코드
