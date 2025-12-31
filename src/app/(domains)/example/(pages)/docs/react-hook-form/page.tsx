@@ -23,6 +23,9 @@ const ReactHookFormEx: IComponent<IReactHookFormExProps> = (): JSX.Element => {
 							</h1>
 						</div>
 						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+							<strong>좀 더 파악후 진행이 필요한 기능.</strong>
+						</p>
+						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
 							현재 페이지는 <strong>Server Component</strong>이며, 폼 부분만 <strong>Client Component</strong>로 분리된
 							하이브리드 패턴입니다.
 						</p>

@@ -36,7 +36,7 @@ const ClientFormRouteHandlerEx: IComponent<IClientFormRouteHandlerExProps> = ():
 					<div className="flex flex-col gap-2">
 						<div className="flex items-start justify-between">
 							<h1 className="scroll-m-20 text-4xl font-semibold tracking-tight sm:text-3xl xl:text-4xl">
-								FormData 전송 (Client Component + Router Handler)
+								FormData 전송 (Client Component + Route Handlers)
 							</h1>
 							<div className="docs-nav bg-background/80 border-border/50 fixed inset-x-0 bottom-0 isolate z-50 flex items-center gap-2 border-t px-6 py-4 backdrop-blur-sm sm:static sm:z-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-1.5 sm:backdrop-blur-none">
 								&nbsp;
@@ -46,8 +46,8 @@ const ClientFormRouteHandlerEx: IComponent<IClientFormRouteHandlerExProps> = ():
 							현재 화면은 <strong>Client Component</strong>로 구성되어 있습니다.
 						</p>
 						<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
-							<strong>Client Component</strong>에서 <strong>FormData</strong>를 <strong>Router Handler</strong>로
-							전달하고, <strong>Router Handler</strong>에서는 <strong>FormData</strong>를 파싱하여{' '}
+							<strong>Client Component</strong>에서 <strong>FormData</strong>를 <strong>Route Handler</strong>로
+							전달하고, <strong>Route Handler</strong>에서는 <strong>FormData</strong>를 파싱하여{' '}
 							<strong>REST API</strong>를 호출하는 과정의 예제입니다.
 						</p>
 						<Alert className="border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950">
@@ -55,19 +55,19 @@ const ClientFormRouteHandlerEx: IComponent<IClientFormRouteHandlerExProps> = ():
 								name="MessageCircleWarning"
 								className="text-blue-600 dark:text-blue-400"
 							/>
-							<AlertTitle className="text-blue-900 dark:text-blue-100">Router Handler vs Server Action</AlertTitle>
+							<AlertTitle className="text-blue-900 dark:text-blue-100">Route Handler vs Server Action</AlertTitle>
 							<AlertDescription className="text-blue-800 dark:text-blue-200">
 								<div className="flex flex-col gap-2">
 									<ul className="list-disc list-inside text-sm space-y-1">
 										<li>
-											<strong>Router Handler : </strong>API 엔드포인트를 생성하는 방식. RESTful API 패턴으로 외부에서도
+											<strong>Route Handler : </strong>API 엔드포인트를 생성하는 방식. RESTful API 패턴으로 외부에서도
 											호출 가능
 										</li>
 										<li>
 											<strong>Server Action : </strong>서버 함수를 직접 호출하는 방식. 내부에서만 사용 가능
 										</li>
 										<li>
-											<strong>사용 시기 : </strong>외부 API로 제공해야 하거나, RESTful 패턴이 필요한 경우 Router Handler
+											<strong>Route Handler사용 시기 : </strong>외부 API로 제공해야 하거나, RESTful 패턴이 필요한 경우
 											사용
 										</li>
 									</ul>
@@ -84,17 +84,17 @@ const ClientFormRouteHandlerEx: IComponent<IClientFormRouteHandlerExProps> = ():
 									data-shorcut="true"
 									className="scroll-m-20 text-3xl font-semibold tracking-tight sm:text-3xl xl:text-3xl"
 								>
-									Form예제(Router Handler 호출)
+									Form예제(Route Handler 호출)
 								</h2>
 								<div className="docs-nav bg-background/80 border-border/50 fixed inset-x-0 bottom-0 isolate z-50 flex items-center gap-2 border-t px-6 py-4 backdrop-blur-sm sm:static sm:z-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-1.5 sm:backdrop-blur-none">
 									&nbsp;
 								</div>
 							</div>
 							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
-								Client Component에서 Form 제출을 처리할 때 <strong>Router Handler</strong>를 사용하여 구현한 예제입니다.
+								Client Component에서 Form 제출을 처리할 때 <strong>Route Handler</strong>를 사용하여 구현한 예제입니다.
 							</p>
 							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
-								<strong>TanStack Query의 useMutation</strong>을 사용하여 Router Handler를 호출하고, 로딩 상태와 에러를
+								<strong>TanStack Query의 useMutation</strong>을 사용하여 Route Handler를 호출하고, 로딩 상태와 에러를
 								자동으로 관리합니다.
 							</p>
 							<Alert className="border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950">
@@ -137,12 +137,12 @@ const ClientFormRouteHandlerEx: IComponent<IClientFormRouteHandlerExProps> = ():
 											Failed to execute 'postMessage' on 'Window': FormData object could not be cloned.
 										</code>
 										<p className="text-sm">
-											<strong>원인:</strong> TanStack Query DevTools가 FormData를 직렬화하려고 시도하지만, FormData는
-											구조화된 복제를 지원하지 않습니다.
+											<strong>원인:</strong> TanStack Query가 FormData를 직렬화하려고 시도하지만, FormData는 구조화된
+											복제를 지원하지 않습니다.
 										</p>
 										<p className="text-sm">
 											<strong>해결:</strong> FormData를 일반 객체로 변환하여 전달하고, mutationFn 내부에서 다시
-											FormData로 변환합니다.
+											FormData로 변환하여 사용합니다.
 										</p>
 									</div>
 								</AlertDescription>
@@ -163,11 +163,11 @@ const ClientFormRouteHandlerEx: IComponent<IClientFormRouteHandlerExProps> = ():
                       │ FormData 전송 (fetch API)
                       ▼
 ┌───────────────────────────────────────────────────────────────┐
-│    2. Router Handler (/example/api/form-submit)               │
+│    2. Route Handler (/example/api/form-submit)                │
 │                                                               │
 │  • FormData 파싱                                              │
 │  • serverApi() 통해 REST API 호출                             │
-│  • 응답 객체 반환 (JSON)                                       │
+│  • 응답 객체 반환 (JSON)                                      │
 └─────────────────────┬─────────────────────────────────────────┘
                       │
                       ▼
@@ -179,9 +179,9 @@ const ClientFormRouteHandlerEx: IComponent<IClientFormRouteHandlerExProps> = ():
                       │
                       ▼
 ┌───────────────────────────────────────────────────────────────┐
-│    4. 클라이언트에서 결과 렌더링                             │
+│    4. 클라이언트에서 결과 렌더링                               │
 │                                                               │
-│  • useState로 받은 결과(result) 사용                          │
+│  • useState로 받은 결과(result) 사용                           │
 │  • JSON.stringify(result) 등으로 결과 화면 표시                │
 └───────────────────────────────────────────────────────────────┘`}
 									</pre>
@@ -422,9 +422,13 @@ export async function POST(request: NextRequest) {
 									data-shorcut="true"
 									className="scroll-m-20 text-3xl font-semibold tracking-tight sm:text-3xl xl:text-3xl"
 								>
-									커스텀 훅으로 재사용하기
+									커스텀 훅으로 재사용하기(진행중...)
 								</h2>
 							</div>
+							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
+								<strong>useFormDataMutation</strong>은 useFormDataMutation.ts파일로 따로 분리되어있음. 추후 파악 후
+								진행해야함.
+							</p>
 							<p className="text-muted-foreground text-[1.05rem] text-balance sm:text-base">
 								FormData 전송 로직을 <strong>커스텀 훅(useFormDataMutation)</strong>으로 만들어 재사용할 수 있습니다.
 							</p>
