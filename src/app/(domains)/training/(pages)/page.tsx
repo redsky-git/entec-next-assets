@@ -56,17 +56,17 @@ const TrainingMain: IComponent<ITrainingMainProps> = () => {
 import type { IComponent } from '@/core/types/common';
  
 // 페이지 컴포넌트의 Props 타입 정의
-interface IPageTemplateProps {
+interface ISamplePageProps {
 	// test?: string;
 }
  
 // 페이지 컴포넌트 본체
-const PageTemplate: IComponent<IPageTemplateProps> = () => {
+const SamplePage: IComponent<ISamplePageProps> = () => {
 	return (<div>기본 템플릿 페이지입니다.</div>);
 };
 // 페이지 컴포넌트 이름 정의
-PageTemplate.displayName = 'PageTemplate';
-export default PageTemplate;`}
+SamplePage.displayName = 'SamplePage';
+export default SamplePage;`}
 								/>
 							</div>
 						</div>
